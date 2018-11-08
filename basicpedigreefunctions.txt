@@ -34,9 +34,9 @@
 
 -----Optional Additional Information-----
 
-**FIRSTNAME**
+**CURRENT FIRSTNAME**
 
-**LASTNAME**
+**CURRENT LASTNAME**
 
 **BIRTHDATE**
 
