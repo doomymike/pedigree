@@ -1,0 +1,43 @@
+//:Pedigree Family Generator V0.0
+
+-----Interface Notes/Instructions-----
+
+**Each individual is selectable
+**Once selected, an individual can have four options
+
+
+
+-----Four options of an Individual-----
+
+**ADD PARENTS**
+
+**ADD PARTNER**
+
+**ADD SIBLING**
+
+**ADD CHILD**
+
+**Once selected, an option requires the use to input
+**both required and optional additional information (listed below)
+
+
+
+-----Required Additional Information-----
+
+**GENDER (MALE OR FEMALE)**
+
+**LIVING (LIVING OR DEAD)**
+
+**AFFECTED (AFFECTED OR INAFFECTED)**
+
+
+
+-----Optional Additional Information-----
+
+**FIRSTNAME**
+
+**LASTNAME**
+
+**BIRTHDATE**
+
+**LASTNAME AT BIRTH (IF CHANGED DURING MARRIAGE)**
