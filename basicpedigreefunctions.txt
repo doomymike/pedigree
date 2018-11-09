@@ -13,8 +13,6 @@
 
 **ADD PARTNER**
 
-**ADD SIBLING**
-
 **ADD CHILD**
 
 **Once selected, an option requires the use to input
