@@ -8,8 +8,10 @@ class Node{
 	ArrayList<Node> children;
 	Node mother;
 	Node father;
-	double diseaseChance;
 	boolean affected;
+	double homozygousAffected;
+	double heterozygous;
+	double homosygousUnaffected;
 	String name;
 	Node spouse;
 	
