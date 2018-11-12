@@ -4,47 +4,47 @@ public class Tree {
 	
 }
 
-class Node{
-	ArrayList<Node> children;
-	Node mother;
-	Node father;
+class Person{
+	ArrayList<Person> children;
+	Person mother;
+	Person father;
 	boolean affected;
 	double homozygousAffected;
 	double heterozygous;
 	double homosygousUnaffected;
 	String name;
-	Node spouse;
+	Person spouse;
 	
-	Node(){
+	Person(){
 		
 	}
-	Node(boolean affected){
+	Person(boolean affected){
 		this.affected = affected;
 	}
 	
-	Node(String name){
+	Person(String name){
 		this.name = name;
 	}
 	
 	//maybe remove
-	Node(String mother,String father){
-		this.father = new Node(father);
-		this.mother = new Node(mother);
+	Person(String mother,String father){
+		this.father = new Person(father);
+		this.mother = new Person(mother);
 		this.father.spouse = this.mother;
 		this.mother.spouse = this.father;
 	}
 	
 	void addChild(String child){
-		this.children.add(new Node(child));
+		this.children.add(new Person(child));
 	}
 	
 	void addPartner(String partner) {
-		this.spouse = new Node(partner);
+		this.spouse = new Person(partner);
 	}
 	
 	void addParents(String mother,String father) {
-		this.father = new Node(father);
-		this.mother = new Node(mother);
+		this.father = new Person(father);
+		this.mother = new Person(mother);
 		this.father.spouse = this.mother;
 		this.mother.spouse = this.father;
 	}
