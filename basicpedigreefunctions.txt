@@ -32,6 +32,8 @@
 
 -----Optional Additional Information-----
 
+**GENOTYPE (AA/Aa/aa)
+
 **CURRENT FIRSTNAME**
 
 **CURRENT LASTNAME**
