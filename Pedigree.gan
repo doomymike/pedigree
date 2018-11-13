@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2018-11-28" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="2.8.8" locale="en_CA">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2018-11-13" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="2.8.8" locale="en_CA">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Name" width="168" order="0"/>
@@ -43,8 +43,12 @@
         <task id="9" name="Develop first model" color="#8cb6ce" meeting="false" start="2018-11-19" duration="11" complete="0" thirdDate="2018-11-12" thirdDate-constraint="0" expand="true">
             <depend id="11" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="11" name="Testing and modification" color="#8cb6ce" meeting="false" start="2018-12-04" duration="6" complete="0" thirdDate="2018-11-28" thirdDate-constraint="0" expand="true"/>
+        <task id="20" name="Demo first model" color="#8cb6ce" meeting="true" start="2018-12-03" duration="0" complete="0" thirdDate="2018-11-22" thirdDate-constraint="0" expand="true"/>
+        <task id="11" name="Testing and modification" color="#8cb6ce" meeting="false" start="2018-12-04" duration="6" complete="0" thirdDate="2018-12-04" thirdDate-constraint="0" expand="true"/>
         <task id="14" name="Demo of final project" color="#8cb6ce" meeting="true" start="2018-12-11" duration="0" complete="0" thirdDate="2018-11-28" thirdDate-constraint="0" expand="true"/>
+        <task id="15" name="Front end" color="#8cb6ce" meeting="false" start="2018-11-12" duration="16" complete="0" thirdDate="2018-11-12" thirdDate-constraint="0" expand="true">
+            <depend id="11" type="2" difference="0" hardness="Strong"/>
+        </task>
     </tasks>
     <resources>
         <resource id="0" name="Nicholas Carr" function="SoftwareDevelopment:2" contacts="nicholascarr001@gmail.com" phone=""/>
@@ -55,6 +59,7 @@
     <allocations>
         <allocation task-id="0" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="3" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="15" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="0" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="3" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="0" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
