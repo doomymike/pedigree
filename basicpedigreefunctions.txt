@@ -32,7 +32,7 @@
 
 -----Optional Additional Information-----
 
-**GENOTYPE (AA/Aa/aa)
+**GENOTYPE (AA/Aa/aa)**
 
 **CURRENT FIRSTNAME**
 
