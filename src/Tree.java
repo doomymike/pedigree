@@ -6,7 +6,7 @@ public class Tree {
 	Tree(){
 		Person initialPerson = new Person();
 		Person initialMother = new Person();
-		initialMother.sex = true;
+		initialMother.setSex(true);
 		Person initialFather = new Person();
 		
 		initialFather.addPartner(initialMother);
@@ -25,14 +25,14 @@ public class Tree {
 
 class Person{
 	ArrayList<Person> children;
-	Person mother;
-	Person father;
-	Person spouse;
-	boolean sex; // false = male, true = female
-	boolean affected;
-	double homozygousAffected;
-	double heterozygous;
-	double homozygousUnaffected;
+	private Person mother;
+	private Person father;
+	private Person spouse;
+	private boolean sex; // false = male, true = female
+	private boolean affected;
+	private double homozygousAffected;
+	private double heterozygous;
+	private double homozygousUnaffected;
 	//String name;
 	
 	
@@ -72,5 +72,68 @@ class Person{
 		this.father = father;
 		this.mother = mother;
 	}
-	
+
+	public Person getMother() {
+		return mother;
+	}
+
+	public void setMother(Person mother) {
+		this.mother = mother;
+	}
+
+	public Person getFather() {
+		return father;
+	}
+
+	public void setFather(Person father) {
+		this.father = father;
+	}
+
+	public boolean isAffected() {
+		return affected;
+	}
+
+	public void setAffected(boolean affected) {
+		this.affected = affected;
+	}
+
+	public Person getSpouse() {
+		return spouse;
+	}
+
+	public void setSpouse(Person spouse) {
+		this.spouse = spouse;
+	}
+
+	public boolean isSex() {
+		return sex;
+	}
+
+	public void setSex(boolean sex) {
+		this.sex = sex;
+	}
+
+	public double getHomozygousAffected() {
+		return homozygousAffected;
+	}
+
+	public void setHomozygousAffected(double homozygousAffected) {
+		this.homozygousAffected = homozygousAffected;
+	}
+
+	public double getHeterozygous() {
+		return heterozygous;
+	}
+
+	public void setHeterozygous(double heterozygous) {
+		this.heterozygous = heterozygous;
+	}
+
+	public double getHomozygousUnaffected() {
+		return homozygousUnaffected;
+	}
+
+	public void setHomozygousUnaffected(double homozygousUnaffected) {
+		this.homozygousUnaffected = homozygousUnaffected;
+	}
 }
