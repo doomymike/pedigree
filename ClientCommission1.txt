@@ -1,0 +1,11 @@
+://Client Commission 1.0 - Examples
+
+--Autosomal Dominant (Dwarfism)--
+
+--Autosomal Recessive (TaySachs)--
+
+--X-Linked Dominant (Fragile X Syndrome)--
+
+--X-Linked Recessive (Colourblind)--
+
+--Y-Linked (Hairy Ears)--
