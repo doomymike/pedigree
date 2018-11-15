@@ -19,13 +19,35 @@ public class Tree {
 		initialParents.add(initialMother);
 		ArrayList<Person> initialPersons = new ArrayList<Person>();
 		initialPersons.add(initialPerson);
-		all.add(initialPersons);
 		all.add(initialParents);
+		all.add(initialPersons);
 	}
+	
+	private Person getPerson(int generation, int number) {
+		return all.get(generation).get(number);
+	}
+	
+	private int[] getPosition(Person person){
+		for(int i = 0;i<all.size();i++) {
+			for(int j = 0;j<all.get(i).size();j++) {
+				if(all.get(i).get(j) == person) {
+					int[] ans = {i,j};
+					return ans;
+				}
+			}
+		}
+		int[] ans = {-1,-1};
+		return ans;
+	}
+	
+	public boolean addChild(Person person){
+		return false;
+	}
+	
 }
 
 class Person{
-	ArrayList<Person> children;
+	ArrayList<Person> children = new ArrayList<Person>();
 	private Person mother;
 	private Person father;
 	private Person spouse;
@@ -113,7 +135,7 @@ class Person{
 		this.spouse = spouse;
 	}
 
-	public boolean isSex() {
+	public boolean getSex() {
 		return sex;
 	}
 
