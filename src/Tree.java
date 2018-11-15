@@ -12,6 +12,7 @@ public class Tree {
 		initialFather.addPartner(initialMother);
 		initialFather.addChild(initialPerson);
 		initialPerson.addParents(initialMother, initialFather);
+		initialFather.setSex(false);
 		
 		ArrayList<Person> initialParents = new ArrayList<Person>();
 		initialParents.add(initialFather);
@@ -33,7 +34,7 @@ class Person{
 	private double homozygousAffected;
 	private double heterozygous;
 	private double homozygousUnaffected;
-	private char[] code = new char[2];
+	private char[] code = new char[2]; //only if we are positive
 	//String name;
 	
 	
