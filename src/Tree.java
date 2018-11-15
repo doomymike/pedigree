@@ -33,9 +33,16 @@ class Person{
 	private double homozygousAffected;
 	private double heterozygous;
 	private double homozygousUnaffected;
+	private char[] code = new char[2];
 	//String name;
 	
 	
+	public char[] getCode() {
+		return code;
+	}
+	public void setCode(char[] code) {
+		this.code = code;
+	}
 	Person(){
 		
 	}
