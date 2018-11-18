@@ -23,7 +23,7 @@ public class Calculation {
 	//literally useless but whatever bc it's fricking dominant and only one gene reeee
 	boolean yLinked(Person p){
 		
-		if(p.isSex()){ //women can't have it
+		if(p.getSex()){ //women can't have it
 			return false;
 		}
 		
@@ -32,7 +32,7 @@ public class Calculation {
 		}
 		
 		for(int i =0;i< p.children.size();i++){
-			if(!p.children.get(i).isSex() ){
+			if(!p.children.get(i).getSex() ){
 				if(p.children.get(i).isAffected()){
 					return true;
 				}
@@ -44,7 +44,7 @@ public class Calculation {
 	
 	double xLinkDominant(Person p){ //donezo but only if we know parents 
 		
-		if(p.isSex()){ //female
+		if(p.getSex()){ //female
 			String [] poss = simpleCalc(p);
 			int numAffected = 0;
 			for (int i=0;i<4;i++){
@@ -76,7 +76,7 @@ public class Calculation {
 //		if (p.getMother().getCode() == null){
 //			
 //		}
-		if(p.isSex()){ //female
+		if(p.getSex()){ //female
 			String [] poss = simpleCalc(p);
 			int numAffected = 0;
 			for (int i=0;i<4;i++){
