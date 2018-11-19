@@ -2,32 +2,37 @@ import java.util.ArrayList;
 
 public class Tree {
 	ArrayList<ArrayList<Person>> all = new ArrayList<ArrayList<Person>>();
-	
 	Tree(){
-		Person initialPerson = new Person();
-		Person initialMother = new Person();
-		initialMother.setSex(true);
-		Person initialFather = new Person();
+		Person initialPerson = new Person(false,false);
+		Person initialMother = new Person(false,false);
+		Person initialFather = new Person(false,false);
 		
-		initialFather.addPartner(initialMother);
+		initialFather.addSpouse(initialMother);
 		initialFather.addChild(initialPerson);
 		initialPerson.addParents(initialMother, initialFather);
-		initialFather.setSex(false);
 		
 		ArrayList<Person> initialParents = new ArrayList<Person>();
 		initialParents.add(initialFather);
 		initialParents.add(initialMother);
 		ArrayList<Person> initialPersons = new ArrayList<Person>();
 		initialPersons.add(initialPerson);
-		all.add(initialParents);
 		all.add(initialPersons);
+		all.add(initialParents);
+		
+		addSpouse(initialPerson);
+		addChild(initialFather);
+		
+		for(int i = 0;i<initialFather.children.size();i++) {
+			System.out.println(getPosition(initialFather.children.get(i))[0]);
+			System.out.println(getPosition(initialFather.children.get(i))[1]);
+		}
 	}
 	
-	private Person getPerson(int generation, int number) {
+	public Person getPerson(int generation, int number) {
 		return all.get(generation).get(number);
 	}
 	
-	private int[] getPosition(Person person){
+	public int[] getPosition(Person person){
 		for(int i = 0;i<all.size();i++) {
 			for(int j = 0;j<all.get(i).size();j++) {
 				if(all.get(i).get(j) == person) {
@@ -40,7 +45,40 @@ public class Tree {
 		return ans;
 	}
 	
+	public boolean addParents(Person person) {
+		return false;
+	}
+	
 	public boolean addChild(Person person){
+		if(person.getSpouse() != null) {
+			Person child = new Person(false,false);
+			int maxChildPos = 0;
+			for(int i = 0;i<person.children.size();i++) {
+				maxChildPos = Math.max(getPosition(person.children.get(i))[1]+1,maxChildPos);
+				if(person.children.get(i).getSpouse() != null) {
+					maxChildPos++;
+				}
+			}
+			int[] position = getPosition(person);
+			if(position[0] == 0) {
+				all.add(0,new ArrayList<Person>());
+				position = getPosition(person);
+			}
+			all.get(position[0]-1).add(maxChildPos, child);
+			person.addChild(child);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean addSpouse(Person person) {
+		if(person.getSpouse() == null){
+			Person spouse = new Person(!person.getSex(),false);
+			int[] position = getPosition(person);
+			all.get(position[0]).add(position[1]+1, spouse);
+			person.addSpouse(spouse);
+			return true;
+		}
 		return false;
 	}
 	
@@ -51,25 +89,17 @@ class Person{
 	private Person mother;
 	private Person father;
 	private Person spouse;
+	
 	private boolean sex; // false = male, true = female
 	private boolean affected;
-	private double homozygousAffected;
-	private double heterozygous;
-	private double homozygousUnaffected;
-	private char[] code = new char[2]; //only if we are positive
+	
+	private Fraction homozygousAffected;
+	private Fraction heterozygous;
+	private Fraction homozygousUnaffected;
 	//String name;
 	
-	
-	public char[] getCode() {
-		return code;
-	}
-	public void setCode(char[] code) {
-		this.code = code;
-	}
-	Person(){
-		
-	}
-	Person(boolean affected){
+	Person(boolean sex, boolean affected){
+		this.sex = sex;
 		this.affected = affected;
 	}
 	
@@ -93,9 +123,9 @@ class Person{
 		this.spouse.children.add(child);
 	}
 	
-	void addPartner(Person partner) {
-		this.spouse = partner;
-		partner.spouse = this;
+	void addSpouse(Person spouse) {
+		this.spouse = spouse;
+		spouse.spouse = this;
 	}
 	
 	void addParents(Person mother,Person father) {
@@ -119,6 +149,14 @@ class Person{
 		this.father = father;
 	}
 
+	public Person getSpouse() {
+		return spouse;
+	}
+
+	public void setSpouse(Person spouse) {
+		this.spouse = spouse;
+	}
+	
 	public boolean isAffected() {
 		return affected;
 	}
@@ -127,13 +165,7 @@ class Person{
 		this.affected = affected;
 	}
 
-	public Person getSpouse() {
-		return spouse;
-	}
-
-	public void setSpouse(Person spouse) {
-		this.spouse = spouse;
-	}
+	
 
 	public boolean getSex() {
 		return sex;
@@ -143,27 +175,15 @@ class Person{
 		this.sex = sex;
 	}
 
-	public double getHomozygousAffected() {
+	public Fraction getHomozygousAffected() {
 		return homozygousAffected;
 	}
 
-	public void setHomozygousAffected(double homozygousAffected) {
-		this.homozygousAffected = homozygousAffected;
-	}
-
-	public double getHeterozygous() {
+	public Fraction getHeterozygous() {
 		return heterozygous;
 	}
 
-	public void setHeterozygous(double heterozygous) {
-		this.heterozygous = heterozygous;
-	}
-
-	public double getHomozygousUnaffected() {
+	public Fraction getHomozygousUnaffected() {
 		return homozygousUnaffected;
-	}
-
-	public void setHomozygousUnaffected(double homozygousUnaffected) {
-		this.homozygousUnaffected = homozygousUnaffected;
 	}
 }
