@@ -54,7 +54,7 @@ class Person{
 	private Person father;
 	private Person spouse;
 	private boolean sex; // false = male, true = female
-	private boolean affected = -1;
+	private boolean affected;
 	private double homozygousAffected = -1;
 	private double heterozygous = -1;
 	private double homozygousUnaffected = -1;
