@@ -1,23 +1,34 @@
-import java.util.Arrays;
 
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH going multiple levels down AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHH
 public class Calculation {
-	String[] simpleCalc(Person p){
-		char[] sort =new char[2];
-		String[] options = new String[4];
-		int temp =0;
-		for(int i =0;i<2;i++){
-			for(int j = 0;j<2;j++){
-				sort[0] = p.getFather().getCode()[i];
-				sort[1] = p.getMother().getCode()[j];
-				Arrays.sort(sort);
-				options[temp] = ""+sort[0]+sort[1];
-				temp++;
-			}
+	void simpleCalc(Person p){
+		if(p.getMother().getHeterozygous() == -1){ //heterozygous could be replaced with any
+			autosomalDominant(p.getMother());
+		}
+		if(p.getFather().getHeterozygous() == -1){
+			autosomalDominant(p.getFather());
 		}
 		
+		//done homoAffected
+		double homoAffected = 0;
+		homoAffected += p.getFather().getHomozygousAffected()*p.getMother().getHomozygousAffected();
+		homoAffected += p.getFather().getHomozygousAffected()*p.getMother().getHeterozygous()/2;
+		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousAffected()/2;
+		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHeterozygous()/4;
 		
-		return options;
+		p.setHomozygousAffected(homoAffected);
+		
+		double homoUnaffected = 0;
+		homoUnaffected += p.getFather().getHomozygousUnaffected()*p.getMother().getHomozygousUnaffected();
+		homoUnaffected += p.getFather().getHomozygousUnaffected()*p.getMother().getHeterozygous()/2;
+		homoUnaffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousUnaffected()/2;
+		homoUnaffected += p.getFather().getHeterozygous()*p.getMother().getHeterozygous()/4;
+		
+		p.setHomozygousUnaffected(homoUnaffected);
+		
+		double hetero = 1- homoAffected - homoUnaffected;
+		
+		p.setHeterozygous(hetero);
 	}
 	
 	//literally useless but whatever bc it's fricking dominant and only one gene reeee
@@ -42,103 +53,77 @@ public class Calculation {
 		return false;
 	}
 	
-	double xLinkDominant(Person p){ //donezo but only if we know parents 
+	//done
+	double xLinkDominant(Person p){ // looooooooooooooooooooooooooooooooooooooooooooooooooook idk exactly if this works 
 		
 		if(p.getSex()){ //female
-			String [] poss = simpleCalc(p);
-			int numAffected = 0;
-			for (int i=0;i<4;i++){
-				if (poss[i].contains("a")){
-					numAffected++;
-				}
-			}							//umm maybe we need to store all possibilities bc otherwise going two levels down is impossible
-			return numAffected/4;  
+			  return (autosomalDominant(p)); //check this boi
 		} 
-		if(p.getMother().getCode()[0] == 'a'){//affected gene
-			if(p.getMother().getCode()[1] == 'a'){
-				char[] code ={'a','a'}; //only x matters so both are set to the x
-				p.setCode(code);
-
-				return 1;
-				
-			}
-			return 0.5;
-		}
-		if(p.getMother().getCode()[1]=='a'){ //Aa
-			return 0.5;
-		}
 		
-		return 0;
+		simpleCalc(p.getMother()); //if male only mother matters
+		
+		double homoAffected =0;
+		homoAffected += p.getMother().getHomozygousAffected();
+		homoAffected += p.getMother().getHeterozygous()/2;
+		
+		p.setHomozygousAffected(homoAffected);
+		
+		double homoUnaffected =0;
+		homoUnaffected += p.getMother().getHomozygousUnaffected();
+		homoUnaffected += p.getMother().getHeterozygous()/2;
+		
+		p.setHomozygousUnaffected(homoUnaffected);
+		
+		double hetero;
+		hetero = 1-homoAffected - homoUnaffected;
+		p.setHeterozygous(hetero);
+		
+		return (p.getHeterozygous()+p.getHomozygousAffected());
 	}
 	
-	double xLinkRecessive(Person p){ //done if know parents
+	//done
+	double xLinkRecessive(Person p){ //looooooooooooooooooooooooooooooooooooooooooooooooooook idk exactly if this works 
 		
-//		if (p.getMother().getCode() == null){
-//			
-//		}
 		if(p.getSex()){ //female
-			String [] poss = simpleCalc(p);
-			int numAffected = 0;
-			for (int i=0;i<4;i++){
-				if (poss[i].contains("a")){
-					numAffected++;
-				}
-			}							//umm maybe we need to store all possibilities bc otherwise going two levels down is impossible
-			return numAffected/4;  
-		}
+			  return (autosomalRecessive(p)); //check this boi
+		} 
 		
-		//i copied and pasted and didn't adjust yet
-		if(p.getMother().getCode()[0] == 'a'){//affected gene
-			if(p.getMother().getCode()[1] == 'a'){
-				char[] code ={'a','a'}; //only x matters so both are set to the x
-				p.setCode(code);
-
-				return 1;
-				
-			}
-			return 0.5;
-		}
-		if(p.getMother().getCode()[1]=='a'){ //Aa
-			return 0.5;
-		}
+		simpleCalc(p.getMother()); //if male only mother matters
 		
-		return 0;
-		//FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		double homoAffected =0;
+		homoAffected += p.getMother().getHomozygousAffected();
+		homoAffected += p.getMother().getHeterozygous()/2;
+		
+		p.setHomozygousAffected(homoAffected);
+		
+		double homoUnaffected =0;
+		homoUnaffected += p.getMother().getHomozygousUnaffected();
+		homoUnaffected += p.getMother().getHeterozygous()/2;
+		
+		p.setHomozygousUnaffected(homoUnaffected);
+		
+		double hetero;
+		hetero = 1-homoAffected - homoUnaffected;
+		p.setHeterozygous(hetero);
+		
+		return (p.getHomozygousAffected());
 		
 	}
 	
-	double autosomalRecessive(Person p){ //done if know parents
+	double autosomalRecessive(Person p){ //done
 		
-		
-		String [] poss = simpleCalc(p);
-		int numAffected = 0;
-		for (int i=0;i<4;i++){
-			if (poss[i].contains("aa")){
-				numAffected++;
-			}
-		}
-		if (numAffected == 4){ // known fact
-			char[] code = {'a','a'};
-			p.setCode(code);
-		}
-		return numAffected/4;
-		
-		
+		simpleCalc(p);
+		return (p.getHomozygousAffected());
 		
 	}
 	
-	double autosomalDominant(Person p){ //done if know parents
+	
+	double autosomalDominant(Person p){ //done
 		
-		String [] poss = simpleCalc(p);
-		int numAffected = 0;
-		for (int i=0;i<4;i++){
-			if (poss[i].contains("a")){
-				numAffected++;
-			}
-		}
+		simpleCalc(p);
 		
-		return numAffected/4;
 		
+		return (p.getHomozygousAffected()+p.getHeterozygous());
 	}
 	
 	
