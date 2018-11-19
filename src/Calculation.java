@@ -1,7 +1,24 @@
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHH forgot to compare with affected boolean AAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH going multiple levels down AAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHH
 public class Calculation {
-	void simpleCalc(Person p){
+	
+	
+	void simpleCalc(Person p, boolean dominant){
+		
+		if(p.isAffected() && !dominant){
+			p.setHeterozygous(0);
+			p.setHomozygousAffected(1);
+			p.setHomozygousUnaffected(0);
+			return;
+		}
+		
+		if(!p.isAffected() && dominant){
+			p.setHeterozygous(0);
+			p.setHomozygousAffected(0);
+			p.setHomozygousUnaffected(1);
+			return;
+		}
+		
 		if(p.getMother().getHeterozygous() == -1){ //heterozygous could be replaced with any
 			autosomalDominant(p.getMother());
 		}
@@ -16,7 +33,7 @@ public class Calculation {
 		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousAffected()/2;
 		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHeterozygous()/4;
 		
-		p.setHomozygousAffected(homoAffected);
+		
 		
 		double homoUnaffected = 0;
 		homoUnaffected += p.getFather().getHomozygousUnaffected()*p.getMother().getHomozygousUnaffected();
@@ -24,10 +41,26 @@ public class Calculation {
 		homoUnaffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousUnaffected()/2;
 		homoUnaffected += p.getFather().getHeterozygous()*p.getMother().getHeterozygous()/4;
 		
-		p.setHomozygousUnaffected(homoUnaffected);
+		
 		
 		double hetero = 1- homoAffected - homoUnaffected;
 		
+		//NNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOTTTTTTTTTTTTTTTTT DDDDDOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNEEEEEEEEEEE
+		double temp;
+		if(p.isAffected()){ //affected dominant
+			homoUnaffected = 0;
+			temp = homoAffected+hetero;
+			
+		}else{ //unaffected recessive
+			homoAffected = 0;
+			temp = homoUnaffected+hetero;       //didnt do the conversion
+			
+		}
+			
+		
+		
+		p.setHomozygousAffected(homoAffected);
+		p.setHomozygousUnaffected(homoUnaffected);
 		p.setHeterozygous(hetero);
 	}
 	
@@ -42,6 +75,7 @@ public class Calculation {
 			return true;
 		}
 		
+		//checks if male children are affected
 		for(int i =0;i< p.children.size();i++){
 			if(!p.children.get(i).getSex() ){
 				if(p.children.get(i).isAffected()){
@@ -60,7 +94,7 @@ public class Calculation {
 			  return (autosomalDominant(p)); //check this boi
 		} 
 		
-		simpleCalc(p.getMother()); //if male only mother matters
+		simpleCalc(p.getMother(),true); //if male only mother matters
 		
 		double homoAffected =0;
 		homoAffected += p.getMother().getHomozygousAffected();
@@ -88,7 +122,7 @@ public class Calculation {
 			  return (autosomalRecessive(p)); //check this boi
 		} 
 		
-		simpleCalc(p.getMother()); //if male only mother matters
+		simpleCalc(p.getMother(),false); //if male only mother matters
 		
 		double homoAffected =0;
 		homoAffected += p.getMother().getHomozygousAffected();
@@ -112,7 +146,7 @@ public class Calculation {
 	
 	double autosomalRecessive(Person p){ //done
 		
-		simpleCalc(p);
+		simpleCalc(p,false);
 		return (p.getHomozygousAffected());
 		
 	}
@@ -120,7 +154,7 @@ public class Calculation {
 	
 	double autosomalDominant(Person p){ //done
 		
-		simpleCalc(p);
+		simpleCalc(p,true);
 		
 		
 		return (p.getHomozygousAffected()+p.getHeterozygous());
