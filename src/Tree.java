@@ -54,10 +54,10 @@ class Person{
 	private Person father;
 	private Person spouse;
 	private boolean sex; // false = male, true = female
-	private boolean affected;
-	private double homozygousAffected;
-	private double heterozygous;
-	private double homozygousUnaffected;
+	private boolean affected = -1;
+	private double homozygousAffected = -1;
+	private double heterozygous = -1;
+	private double homozygousUnaffected = -1;
 	private char[] code = new char[2]; //only if we are positive
 	//String name;
 	
