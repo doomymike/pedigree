@@ -2,30 +2,18 @@ import java.util.ArrayList;
 
 public class Tree {
 	ArrayList<ArrayList<Person>> all = new ArrayList<ArrayList<Person>>();
+	Person initialPerson;
 	Tree(){
-		Person initialPerson = new Person(false,false);
-		Person initialMother = new Person(false,false);
-		Person initialFather = new Person(false,false);
-		
-		initialFather.addSpouse(initialMother);
-		initialFather.addChild(initialPerson);
-		initialPerson.addParents(initialMother, initialFather);
-		
-		ArrayList<Person> initialParents = new ArrayList<Person>();
-		initialParents.add(initialFather);
-		initialParents.add(initialMother);
+		initialPerson = new Person(false,false);
+
 		ArrayList<Person> initialPersons = new ArrayList<Person>();
 		initialPersons.add(initialPerson);
 		all.add(initialPersons);
-		all.add(initialParents);
-		
-		addSpouse(initialPerson);
-		addChild(initialFather);
-		
-		for(int i = 0;i<initialFather.children.size();i++) {
-			System.out.println(getPosition(initialFather.children.get(i))[0]);
-			System.out.println(getPosition(initialFather.children.get(i))[1]);
-		}
+
+		addParents(initialPerson);
+		addParents(initialPerson.getMother());
+		addParents(initialPerson.getFather());
+		addChild(initialPerson.getFather().getFather());
 	}
 	
 	public Person getPerson(int generation, int number) {
@@ -45,7 +33,41 @@ public class Tree {
 		return ans;
 	}
 	
+	public boolean isAncestor(Person person) {
+		for(int i = 0;i<person.children.size();i++) {
+			if(isAncestor(person.children.get(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean addParents(Person person) {
+		if(person.getFather() == null && person.getMother() == null) {
+			Person father = new Person(false,false);
+			Person mother = new Person(true,false);
+			int[] position = getPosition(person);
+			if(position[0]+1 == all.size()) {
+				all.add(new ArrayList<Person>());
+			}
+			int addPosition = 0;
+			for(int i = 0;i<all.get(position[0]+1).size();i++) {
+				int maxChild = -1;
+				for(int j = 0;j<getPerson(position[0]+1,i).children.size();j++) {
+					if(getPosition(getPerson(position[0]+1,i).children.get(j))[1] > maxChild) {
+						maxChild = getPosition(getPerson(position[0]+1,i).children.get(j))[1];
+					}
+				}
+				if(maxChild < position[1]) {
+					addPosition = i+1;
+				}
+			}
+			all.get(position[0]+1).add(addPosition,mother);
+			all.get(position[0]+1).add(addPosition,father);
+			father.addSpouse(mother);
+			father.addChild(person);
+			person.addParents(mother, father);
+		}
 		return false;
 	}
 	
@@ -66,6 +88,11 @@ public class Tree {
 			}
 			all.get(position[0]-1).add(maxChildPos, child);
 			person.addChild(child);
+			if(person.getSex()) {
+				child.addParents(person, person.getSpouse());
+			}else {
+				child.addParents(person.getSpouse(), person);
+			}
 			return true;
 		}
 		return false;
