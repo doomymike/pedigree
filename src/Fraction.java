@@ -45,7 +45,7 @@ public class Fraction {
 	}
 	
 	Fraction divide(Fraction other) {
-		return this.add(new Fraction(other.denominaor,other.numerator));
+		return this.multiply(new Fraction(other.denominaor,other.numerator));
 	}
 	
 	public int GCD(int a, int b) {
