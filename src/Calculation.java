@@ -96,7 +96,7 @@ public class Calculation {
 	}
 	
 	//done
-	Fraction xLinkDominant(Person p){ 
+	Fraction xLinkDominant(Person p){ //gotta check is affected
 		
 		if(p.getSex()){ //female
 			  return (autosomalDominant(p)); //check this boi
@@ -124,7 +124,7 @@ public class Calculation {
 	}
 	
 	//done
-	Fraction xLinkRecessive(Person p){ 
+	Fraction xLinkRecessive(Person p){ //gotta check is affected
 		
 		if(p.getSex()){ //female
 			  return (autosomalRecessive(p)); //check this boi
