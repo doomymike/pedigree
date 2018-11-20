@@ -40,6 +40,14 @@ public class Fraction {
 		return new Fraction(top,bottom);
 	}
 	
+	Fraction subtract(Fraction other) {
+		return this.add(new Fraction(-other.numerator,other.denominaor));
+	}
+	
+	Fraction divide(Fraction other) {
+		return this.add(new Fraction(other.denominaor,other.numerator));
+	}
+	
 	public int GCD(int a, int b) {
 		   if (b==0) {
 			   return a;
