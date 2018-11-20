@@ -28,37 +28,45 @@ public class Calculation {
 		
 		//done homoAffected
 		Fraction homoAffected = new Fraction(0,1);
-		homoAffected += p.getFather().getHomozygousAffected()*p.getMother().getHomozygousAffected();
-		homoAffected += p.getFather().getHomozygousAffected()*p.getMother().getHeterozygous()/2;
-		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousAffected()/2;
-		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHeterozygous()/4;
+		homoAffected = homoAffected.add(p.getFather().getHomozygousAffected().multiply(p.getMother().getHomozygousAffected()));
+		
+		
+		homoAffected = homoAffected.add(p.getFather().getHomozygousAffected().multiply(p.getMother().getHeterozygous()).divide(new Fraction(2,1)));
+		homoAffected = homoAffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHomozygousAffected()).divide(new Fraction(2,1)));
+		homoAffected = homoAffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHeterozygous().divide(new Fraction(4,1))));
 		
 		
 		
-		double homoUnaffected = 0;
-		homoUnaffected += p.getFather().getHomozygousUnaffected()*p.getMother().getHomozygousUnaffected();
-		homoUnaffected += p.getFather().getHomozygousUnaffected()*p.getMother().getHeterozygous()/2;
-		homoUnaffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousUnaffected()/2;
-		homoUnaffected += p.getFather().getHeterozygous()*p.getMother().getHeterozygous()/4;
+		Fraction homoUnaffected = new Fraction (0,1);
+		homoUnaffected = homoUnaffected.add(p.getFather().getHomozygousUnaffected().multiply(p.getMother().getHomozygousUnaffected()));
+		homoUnaffected = homoUnaffected.add(p.getFather().getHomozygousUnaffected().multiply(p.getMother().getHeterozygous()).divide(new Fraction(2,1)));
+		homoUnaffected = homoUnaffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHomozygousUnaffected()).divide(new Fraction(2,1)));
+		homoUnaffected = homoUnaffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHeterozygous().divide(new Fraction(4,1))));
 		
 		
+		Fraction hetero = new Fraction(1,1);
+		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		
-		double hetero = 1- homoAffected - homoUnaffected;
-		
-		//NNNNNNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOTTTTTTTTTTTTTTTTT DDDDDOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNEEEEEEEEEEE
-		double temp;
+		//changed to better
+		Fraction temp;
 		if(p.isAffected()){ //affected dominant
-			homoUnaffected = 0;
-			temp = homoAffected+hetero;
+			homoUnaffected.numerator=0;
+			temp = homoAffected.add(hetero);
 			
 		}else{ //unaffected recessive
-			homoAffected = 0;
-			temp = homoUnaffected+hetero;       //didnt do the conversion
+			homoAffected.numerator =0;
+			temp = homoUnaffected.add(hetero);       
 			
 		}
+		
+		homoAffected = homoAffected.divide(temp);
+		homoUnaffected = homoUnaffected.divide(temp);
+		hetero = hetero.divide(temp);
+		
+		
 			
-		
-		
+		//add fractions
+		//divide by sum
 		p.setHomozygousAffected(homoAffected);
 		p.setHomozygousUnaffected(homoUnaffected);
 		p.setHeterozygous(hetero);
@@ -88,7 +96,7 @@ public class Calculation {
 	}
 	
 	//done
-	double xLinkDominant(Person p){ // looooooooooooooooooooooooooooooooooooooooooooooooooook idk exactly if this works 
+	Fraction xLinkDominant(Person p){ 
 		
 		if(p.getSex()){ //female
 			  return (autosomalDominant(p)); //check this boi
@@ -96,27 +104,27 @@ public class Calculation {
 		
 		simpleCalc(p.getMother(),true); //if male only mother matters
 		
-		double homoAffected =0;
-		homoAffected += p.getMother().getHomozygousAffected();
-		homoAffected += p.getMother().getHeterozygous()/2;
+		Fraction homoAffected = new Fraction(0,0);
+		homoAffected =  homoAffected.add(p.getMother().getHomozygousAffected());
+		homoAffected = homoAffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
 		p.setHomozygousAffected(homoAffected);
 		
-		double homoUnaffected =0;
-		homoUnaffected += p.getMother().getHomozygousUnaffected();
-		homoUnaffected += p.getMother().getHeterozygous()/2;
+		Fraction homoUnaffected = new Fraction(0,0);
+		homoUnaffected = homoUnaffected.add(p.getMother().getHomozygousUnaffected());
+		homoUnaffected = homoUnaffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
 		p.setHomozygousUnaffected(homoUnaffected);
 		
-		double hetero;
-		hetero = 1-homoAffected - homoUnaffected;
+		Fraction hetero = new Fraction(1,1);
+		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		p.setHeterozygous(hetero);
 		
-		return (p.getHeterozygous()+p.getHomozygousAffected());
+		return (p.getHeterozygous().add(p.getHomozygousAffected()));
 	}
 	
 	//done
-	double xLinkRecessive(Person p){ //looooooooooooooooooooooooooooooooooooooooooooooooooook idk exactly if this works 
+	Fraction xLinkRecessive(Person p){ 
 		
 		if(p.getSex()){ //female
 			  return (autosomalRecessive(p)); //check this boi
@@ -124,27 +132,27 @@ public class Calculation {
 		
 		simpleCalc(p.getMother(),false); //if male only mother matters
 		
-		double homoAffected =0;
-		homoAffected += p.getMother().getHomozygousAffected();
-		homoAffected += p.getMother().getHeterozygous()/2;
+		Fraction homoAffected = new Fraction(0,0);
+		homoAffected = homoAffected.add(p.getMother().getHomozygousAffected());
+		homoAffected = homoAffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
 		p.setHomozygousAffected(homoAffected);
 		
-		double homoUnaffected =0;
-		homoUnaffected += p.getMother().getHomozygousUnaffected();
-		homoUnaffected += p.getMother().getHeterozygous()/2;
+		Fraction homoUnaffected = new Fraction(0,0);
+		homoUnaffected = homoUnaffected.add(p.getMother().getHomozygousUnaffected());
+		homoUnaffected = homoUnaffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
 		p.setHomozygousUnaffected(homoUnaffected);
 		
-		double hetero;
-		hetero = 1-homoAffected - homoUnaffected;
+		Fraction hetero = new Fraction(1,1);
+		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		p.setHeterozygous(hetero);
 		
 		return (p.getHomozygousAffected());
 		
 	}
 	
-	double autosomalRecessive(Person p){ //done
+	Fraction autosomalRecessive(Person p){ //done
 		
 		simpleCalc(p,false);
 		return (p.getHomozygousAffected());
@@ -152,12 +160,12 @@ public class Calculation {
 	}
 	
 	
-	double autosomalDominant(Person p){ //done
+	Fraction autosomalDominant(Person p){ //done
 		
 		simpleCalc(p,true);
 		
 		
-		return (p.getHomozygousAffected()+p.getHeterozygous());
+		return (p.getHomozygousAffected().add(p.getHeterozygous()));
 	}
 	
 	
