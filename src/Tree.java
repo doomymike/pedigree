@@ -86,6 +86,8 @@ public class Tree {
 
 class Person{
 	ArrayList<Person> children = new ArrayList<Person>();
+	public static final boolean FEMALE = true;
+	public static final boolean MALE = false;
 	private Person mother;
 	private Person father;
 	private Person spouse;
