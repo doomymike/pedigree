@@ -6,28 +6,28 @@ public class Calculation {
 	void simpleCalc(Person p, boolean dominant){
 		
 		if(p.isAffected() && !dominant){
-			p.setHeterozygous(0);
-			p.setHomozygousAffected(1);
-			p.setHomozygousUnaffected(0);
+			p.getHeterozygous().set(0, 1);
+			p.getHomozygousAffected().set(1,1);
+			p.getHomozygousUnaffected().set(0, 1);
 			return;
 		}
 		
 		if(!p.isAffected() && dominant){
-			p.setHeterozygous(0);
-			p.setHomozygousAffected(0);
-			p.setHomozygousUnaffected(1);
+			p.getHeterozygous().set(0, 1);
+			p.getHomozygousAffected().set(0,1);
+			p.getHomozygousUnaffected().set(1, 1);
 			return;
 		}
 		
-		if(p.getMother().getHeterozygous() == -1){ //heterozygous could be replaced with any
+		if(p.getMother().getHeterozygous() == null){ //heterozygous could be replaced with any
 			autosomalDominant(p.getMother());
 		}
-		if(p.getFather().getHeterozygous() == -1){
+		if(p.getFather().getHeterozygous() == null){
 			autosomalDominant(p.getFather());
 		}
 		
 		//done homoAffected
-		double homoAffected = 0;
+		Fraction homoAffected = new Fraction(0,1);
 		homoAffected += p.getFather().getHomozygousAffected()*p.getMother().getHomozygousAffected();
 		homoAffected += p.getFather().getHomozygousAffected()*p.getMother().getHeterozygous()/2;
 		homoAffected += p.getFather().getHeterozygous()*p.getMother().getHomozygousAffected()/2;
