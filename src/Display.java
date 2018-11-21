@@ -1,6 +1,6 @@
 import javax.swing.JFrame;
 
-public class Display extends JFrame {
+public class Display extends JFrame implements Refreshable {
 	private Panel panel;
 
 	public Display(Tree tree) {
