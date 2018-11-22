@@ -1,4 +1,4 @@
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHH forgot to compare with affected boolean AAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHH forgot to check downwards AAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 
 public class Calculation {
 	
@@ -26,7 +26,7 @@ public class Calculation {
 			autosomalDominant(p.getFather());
 		}
 		
-		//done homoAffected
+		//Calculates homoAffected
 		Fraction homoAffected = new Fraction(0,1);
 		homoAffected = homoAffected.add(p.getFather().getHomozygousAffected().multiply(p.getMother().getHomozygousAffected()));
 		homoAffected = homoAffected.add(p.getFather().getHomozygousAffected().multiply(p.getMother().getHeterozygous()).divide(new Fraction(2,1)));
@@ -34,14 +34,14 @@ public class Calculation {
 		homoAffected = homoAffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHeterozygous().divide(new Fraction(4,1))));
 		
 		
-		
+		//Calculates homoUnaffected
 		Fraction homoUnaffected = new Fraction (0,1);
 		homoUnaffected = homoUnaffected.add(p.getFather().getHomozygousUnaffected().multiply(p.getMother().getHomozygousUnaffected()));
 		homoUnaffected = homoUnaffected.add(p.getFather().getHomozygousUnaffected().multiply(p.getMother().getHeterozygous()).divide(new Fraction(2,1)));
 		homoUnaffected = homoUnaffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHomozygousUnaffected()).divide(new Fraction(2,1)));
 		homoUnaffected = homoUnaffected.add(p.getFather().getHeterozygous().multiply(p.getMother().getHeterozygous().divide(new Fraction(4,1))));
 		
-		
+		//Calculates homoAffected
 		Fraction hetero = new Fraction(1,1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		
@@ -97,27 +97,28 @@ public class Calculation {
 	}
 	
 	//done
-	Fraction xLinkDominant(Person p){ //gotta check is affected    
+	Fraction xLinkDominant(Person p){ 
 		
 		if(p.getSex()){ //female
-			  return (autosomalDominant(p)); //check this boi
+			  return (autosomalDominant(p)); //xlinked is equal to autosomal for females
 		} 
 		
 		
 		
 		simpleCalc(p.getMother(),true); //if male only mother matters
 		
+		//Calculates homoAffected
 		Fraction homoAffected = new Fraction(0,0);
 		homoAffected =  homoAffected.add(p.getMother().getHomozygousAffected());
 		homoAffected = homoAffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
 		
-		
+		//Calculates homoUnaffected
 		Fraction homoUnaffected = new Fraction(0,0);
 		homoUnaffected = homoUnaffected.add(p.getMother().getHomozygousUnaffected());
 		homoUnaffected = homoUnaffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
-		
+		//Calculates hetero
 		Fraction hetero = new Fraction(1,1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		
@@ -126,9 +127,13 @@ public class Calculation {
 			homoUnaffected.numerator=0;
 			temp = homoAffected.add(hetero);
 			homoAffected = homoAffected.divide(temp);
-			homoUnaffected = homoUnaffected.divide(temp);
 			hetero = hetero.divide(temp);
 			
+		}else{ //not affected #2 oops oh well dominant
+			p.getHeterozygous().set(0, 1);
+			p.getHomozygousAffected().set(0,1);
+			p.getHomozygousUnaffected().set(1, 1);
+			return (new Fraction(0,1));
 		}
 		
 		
@@ -155,20 +160,30 @@ public class Calculation {
 		
 		simpleCalc(p.getMother(),false); //if male only mother matters
 		
+		//Calculates homoAffected
 		Fraction homoAffected = new Fraction(0,0);
 		homoAffected = homoAffected.add(p.getMother().getHomozygousAffected());
 		homoAffected = homoAffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
-		p.setHomozygousAffected(homoAffected);
-		
+		//Calculates homoUnaffected
 		Fraction homoUnaffected = new Fraction(0,0);
 		homoUnaffected = homoUnaffected.add(p.getMother().getHomozygousUnaffected());
 		homoUnaffected = homoUnaffected.add(p.getMother().getHeterozygous().divide(new Fraction (2,1)));
 		
-		p.setHomozygousUnaffected(homoUnaffected);
-		
+		//Calculates hetero
 		Fraction hetero = new Fraction(1,1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
+		
+		if(!p.isAffected()){ //back to number 2
+			Fraction temp;
+			homoAffected.numerator=0;
+			temp = homoUnaffected.add(hetero);
+			homoUnaffected = homoUnaffected.divide(temp);
+			hetero = hetero.divide(temp);
+		}
+		
+		p.setHomozygousAffected(homoAffected);
+		p.setHomozygousUnaffected(homoUnaffected);
 		p.setHeterozygous(hetero);
 		
 		return (p.getHomozygousAffected());
