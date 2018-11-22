@@ -246,6 +246,82 @@ public class Calculation {
 		
 	}
 	
+	boolean childDominant(Person p) {
+		//carrier means heterozygous
+		if(p.getSpouse() != null) {
+			if(!p.isAffected() && !p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(p.children.get(i).isAffected()) {
+						return false;
+					}
+				}
+			}
+			if(p.isAffected() && !p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+					}
+				}
+			}
+			if(!p.isAffected() && p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(p.children.get(i).isAffected()) {
+						p.getSpouse().isCarrier = true;
+					}
+				}
+			}
+			if(p.isAffected() && p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(!p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+						p.getSpouse().isCarrier = true;
+					}else if(p.children.get(i).isCarrier) {
+						// this needs something
+					}
+				}
+			}
+			return true;
+		}
+		return true;
+	}
 	
+	boolean childRecessive(Person p) {
+		//carrier means heterozygous
+		if(p.getSpouse() != null) {
+			if(p.isAffected() && p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(!p.children.get(i).isAffected()) {
+						return false;
+					}
+				}
+			}
+			if(p.isAffected() && !p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(p.children.get(i).isAffected()) {
+						p.getSpouse().isCarrier = true;
+					}
+				}
+			}
+			if(!p.isAffected() && p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+					}
+				}
+			}
+			if(!p.isAffected() && !p.getSpouse().isAffected()) {
+				for(int i = 0;i<p.children.size();i++) {
+					if(p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+						p.getSpouse().isCarrier = true;
+					}else if(p.children.get(i).isCarrier) {
+						// this needs something
+					}
+				}
+			}
+			return true;
+		}
+		return true;
+	}
 	
 }
