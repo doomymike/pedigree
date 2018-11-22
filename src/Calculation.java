@@ -5,20 +5,21 @@ public class Calculation {
 	//best code
 	void simpleCalc(Person p, boolean dominant){
 		
-		if(p.isAffected() && !dominant){
+		if(p.isAffected() && !dominant){ //affected recessive
 			p.getHeterozygous().set(0, 1);
 			p.getHomozygousAffected().set(1,1);
 			p.getHomozygousUnaffected().set(0, 1);
 			return;
 		}
 		
-		if(!p.isAffected() && dominant){
+		if(!p.isAffected() && dominant){ //dominant unaffected
 			p.getHeterozygous().set(0, 1);
 			p.getHomozygousAffected().set(0,1);
 			p.getHomozygousUnaffected().set(1, 1);
 			return;
 		}
 		
+		//checks if parents are known
 		if(p.getMother().getHeterozygous() == null){ //heterozygous could be replaced with any
 			autosomalDominant(p.getMother());
 		}
@@ -60,14 +61,13 @@ public class Calculation {
 			
 		}
 		
+		//recalculates given restrictions
 		homoAffected = homoAffected.divide(temp);
 		homoUnaffected = homoUnaffected.divide(temp);
 		hetero = hetero.divide(temp);
 		
 		
-			
-		//add fractions
-		//divide by sum
+		//sets probablilities
 		p.setHomozygousAffected(homoAffected);
 		p.setHomozygousUnaffected(homoUnaffected);
 		p.setHeterozygous(hetero);
@@ -136,7 +136,7 @@ public class Calculation {
 			return (new Fraction(0,1));
 		}
 		
-		
+		//sets probabilities
 		p.setHomozygousAffected(homoAffected);
 		p.setHomozygousUnaffected(homoUnaffected);
 		p.setHeterozygous(hetero);
@@ -145,7 +145,7 @@ public class Calculation {
 	}
 	
 	//done
-	Fraction xLinkRecessive(Person p){ //gotta check is affected -----------------------------------------------------------------
+	Fraction xLinkRecessive(Person p){ 
 		
 		if(p.isAffected()){
 			p.getHeterozygous().set(0, 1);
@@ -174,7 +174,7 @@ public class Calculation {
 		Fraction hetero = new Fraction(1,1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		
-		if(!p.isAffected()){ //back to number 2
+		if(!p.isAffected()){ //back to number 2  ---------------------------------------------------------------
 			Fraction temp;
 			homoAffected.numerator=0;
 			temp = homoUnaffected.add(hetero);
@@ -201,9 +201,8 @@ public class Calculation {
 	Fraction autosomalDominant(Person p){ //done
 		
 		simpleCalc(p,true);
-		
-		
 		return (p.getHomozygousAffected().add(p.getHeterozygous()));
+		
 	}
 	
 	
