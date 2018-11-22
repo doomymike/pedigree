@@ -1,8 +1,18 @@
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHH forgot to check downwards AAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-
+/**
+ * Calculation
+ * @author Michael Oren, Max Tang
+ *
+ */
 public class Calculation {
 	
 	//best code
+	/**
+	 * simpleCalc
+	 * @param p
+	 * @param dominant
+	 * Calculates all genetic probabilities
+	 */
 	void simpleCalc(Person p, boolean dominant){
 		
 		if(p.isAffected() && !dominant){ //affected recessive
@@ -74,6 +84,12 @@ public class Calculation {
 	}
 	
 	//literally useless but whatever bc it's fricking dominant and only one gene reeee
+	/**
+	 * yLinked
+	 * @param p
+	 * @return boolean
+	 * Calculates whether or not an individual has the y-linked condition
+	 */
 	boolean yLinked(Person p){
 		
 		if(p.getSex()){ //women can't have it
@@ -97,6 +113,12 @@ public class Calculation {
 	}
 	
 	//done
+	/**
+	 * xLinkDominant
+	 * @param p
+	 * @return Fraction
+	 * Calculates chance of being affected by the x-linked dominant condition
+	 */
 	Fraction xLinkDominant(Person p){ 
 		
 		if(p.getSex()){ //female
@@ -145,6 +167,12 @@ public class Calculation {
 	}
 	
 	//done
+	/**
+	 * xLinkRecessive
+	 * @param p
+	 * @return Fraction
+	 * Calculates chance of being affected by the x-linked recessive condition
+	 */
 	Fraction xLinkRecessive(Person p){ 
 		
 		if(p.isAffected()){
@@ -189,7 +217,12 @@ public class Calculation {
 		return (p.getHomozygousAffected());
 		
 	}
-	
+	/**
+	 * autosomalRecessive
+	 * @param p
+	 * @return Fraction
+	 * Calculates chance of being affected by the autosomal recessive condition
+	 */
 	Fraction autosomalRecessive(Person p){ //done
 		
 		simpleCalc(p,false);
@@ -197,7 +230,12 @@ public class Calculation {
 		
 	}
 	
-	
+	/**
+	 * autosomalDominant
+	 * @param p
+	 * @return Fraction
+	 * Calculates chance of being affected by the autosomal dominant condition
+	 */
 	Fraction autosomalDominant(Person p){ //done
 		
 		simpleCalc(p,true);
