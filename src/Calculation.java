@@ -22,12 +22,13 @@ public class Calculation {
 			return;
 		}
 		
-		if(!p.isAffected() && dominant){ //dominant unaffected
-			p.getHeterozygous().set(0, 1);
-			p.getHomozygousAffected().set(0,1);
-			p.getHomozygousUnaffected().set(1, 1);
-			return;
-		}
+		//not using false
+//		if(!p.isAffected() && dominant){ //dominant unaffected
+//			p.getHeterozygous().set(0, 1);
+//			p.getHomozygousAffected().set(0,1);
+//			p.getHomozygousUnaffected().set(1, 1);
+//			return;
+//		}
 		
 		//checks if parents are known
 		if(p.getMother().getHeterozygous() == null){ //heterozygous could be replaced with any
@@ -102,8 +103,8 @@ public class Calculation {
 		
 		//checks if male children are affected
 		for(int i =0;i< p.children.size();i++){
-			if(!p.children.get(i).getSex() ){
-				if(p.children.get(i).isAffected()){
+			if(!p.children.get(i).getSex() ){ //male
+				if(p.children.get(i).isAffected()){ 
 					return true;
 				}
 			}
@@ -150,12 +151,13 @@ public class Calculation {
 			temp = homoAffected.add(hetero);
 			homoAffected = homoAffected.divide(temp);
 			hetero = hetero.divide(temp);
-			
-		}else{ //not affected #2 oops oh well dominant
-			p.getHeterozygous().set(0, 1);
-			p.getHomozygousAffected().set(0,1);
-			p.getHomozygousUnaffected().set(1, 1);
-			return (new Fraction(0,1));
+		
+			//removed checking false (can't know unaffected for sure)
+//		}else{ //not affected #2 oops oh well dominant
+//			p.getHeterozygous().set(0, 1);
+//			p.getHomozygousAffected().set(0,1);
+//			p.getHomozygousUnaffected().set(1, 1);
+//			return (new Fraction(0,1));
 		}
 		
 		//sets probabilities
@@ -202,13 +204,14 @@ public class Calculation {
 		Fraction hetero = new Fraction(1,1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 		
-		if(!p.isAffected()){ //back to number 2  ---------------------------------------------------------------
-			Fraction temp;
-			homoAffected.numerator=0;
-			temp = homoUnaffected.add(hetero);
-			homoUnaffected = homoUnaffected.divide(temp);
-			hetero = hetero.divide(temp);
-		}
+		//decided checking false isnt how pedigree works
+//		if(!p.isAffected()){ //back to number 2  ---------------------------------------------------------------
+//			Fraction temp;
+//			homoAffected.numerator=0;
+//			temp = homoUnaffected.add(hetero);
+//			homoUnaffected = homoUnaffected.divide(temp);
+//			hetero = hetero.divide(temp);
+//		}
 		
 		p.setHomozygousAffected(homoAffected);
 		p.setHomozygousUnaffected(homoUnaffected);
