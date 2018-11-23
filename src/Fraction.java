@@ -1,50 +1,51 @@
+
 public class Fraction {
 	int numerator;
-	int denominator;
+	int denominaor;
 	
-	Fraction(int numerator, int denominator){
+	Fraction(int numerator, int denominaor){
 		this.numerator = numerator;
-		this.denominator = denominator;
+		this.denominaor = denominaor;
 	}
 	
 	int[] get() {
-		int[] ans = {numerator,denominator};
+		int[] ans = {numerator,denominaor};
 		return ans;
 	}
 	
 	void set(int numerator,int denominaor) {
 		this.numerator = numerator;
-		this.denominator = denominaor;
+		this.denominaor = denominaor;
 	}
 	
 	double getNumber() {
-		return numerator/denominator;
+		return numerator/denominaor;
 	}
 	
 	Fraction add(Fraction other) {
-		int top = (numerator * other.denominator) + (other.numerator * denominator);
-		int bottom = denominator * other.denominator;
+		int top = (numerator * other.denominaor) + (other.numerator * denominaor);
+		int bottom = denominaor * other.denominaor;
 		int GCD = GCD(top,bottom);
-		top = numerator/GCD;
-		bottom = denominator/GCD;
+		top = top/GCD;
+		bottom = bottom/GCD;
 		return new Fraction(top,bottom);
 	}
 	
 	Fraction multiply(Fraction other) {
 		int top = numerator * other.numerator;
-		int bottom = denominator * other.denominator;
-		int GCD = GCD(numerator,denominator);
-		top = numerator/GCD;
-		bottom = denominator/GCD;
+		int bottom = denominaor * other.denominaor;
+		int GCD = GCD(top,bottom);
+		top = top/GCD;
+		bottom = bottom/GCD;
 		return new Fraction(top,bottom);
 	}
 	
 	Fraction subtract(Fraction other) {
-		return this.add(new Fraction(-other.numerator,other.denominator));
+		return this.add(new Fraction(-other.numerator,other.denominaor));
 	}
 	
 	Fraction divide(Fraction other) {
-		return this.multiply(new Fraction(other.denominator,other.numerator));
+		return this.multiply(new Fraction(other.denominaor,other.numerator));
 	}
 	
 	public int GCD(int a, int b) {
