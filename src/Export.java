@@ -14,8 +14,32 @@ public class Export {
 			
 			for (int j = 0;j< t.all.get(i).size();j++){
 				
+				
+				
 				writer.print(ofBool(t.all.get(i).get(j).isCarrier));
 				writer.print(ofBool(t.all.get(i).get(j).getSex()));
+				
+				//parent finding
+				if(t.all.get(i).get(j).getFather()!= null){
+					for (int l =0;l<t.all.get(i+1).size();l++){
+						if (t.all.get(i+1).get(l) == t.all.get(i).get(j).getFather()){
+							writer.print(l);
+						}
+					}
+				}else{ // no dad
+					writer.print('e');
+				}
+				
+				if(t.all.get(i).get(j).getMother()!= null){
+					for (int l =0;l<t.all.get(i+1).size();l++){
+						if (t.all.get(i+1).get(l) == t.all.get(i).get(j).getMother()){
+							writer.print(l);
+						}
+					}
+				}else{ // no mom
+					writer.print('e');
+				}
+				
 				writer.println();
 			}
 			writer.println();
