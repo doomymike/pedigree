@@ -102,8 +102,7 @@ public class Export {
 			    		people.get(j).get(i).setMother(people.get(j+1).get(Character.getNumericValue(st.charAt(3))));
 			    		people.get(j+1).get(Character.getNumericValue(st.charAt(3))).children.add(people.get(j).get(i));
 			    	}
-			    	Person temp = new Person(ofString(st.charAt(0)),ofString(st.charAt(1)));
-			    	people.get(j).add(temp);
+			    	
 			    	i++;
 			    }
 			    
