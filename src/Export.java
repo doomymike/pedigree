@@ -3,21 +3,25 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH MORE THAN 10 PEOPLE IN A SINGLE ARRAYLIST AAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 
 public class Export {
 	
 	static void yeet(Tree t)throws IOException {
 		PrintWriter writer = new PrintWriter("test.txt", "UTF-8");
 		
-		
+		writer.println();
 		for (int i =0;i<t.all.size();i++){
 			
 			for (int j = 0;j< t.all.get(i).size();j++){
 				
 				
 				
-				writer.print(ofBool(t.all.get(i).get(j).isCarrier));
+				
 				writer.print(ofBool(t.all.get(i).get(j).getSex()));
+				writer.print(ofBool(t.all.get(i).get(j).isCarrier));
 				
 				//parent finding
 				if(t.all.get(i).get(j).getFather()!= null){
@@ -53,31 +57,69 @@ public class Export {
 		Tree tree = new Tree();
 		
 		yeet(tree);
+		yeet(unyeet());
 		unyeet();
 	}
 	
-	static void unyeet() throws IOException{
+	static Tree unyeet() throws IOException{
 		File file = new File("test.txt"); 
 		  
 		  BufferedReader br = new BufferedReader(new FileReader(file)); 
 		  
 		  String st;
-		  int j = 0;
-		  int i = 0;
-		  Tree t = new Tree();
+		  int j = -1;
+		  
+		  
+		  ArrayList<ArrayList<Person>> people = new ArrayList<ArrayList<Person>>();
+		  
+		  
+
 		  while ((st = br.readLine()) != null){
 		    System.out.println(st);
 		    if(st.equals("")){
+		    	ArrayList<Person> row = new ArrayList<Person>();
 		    	j++;
-		    	i = 0;
+		    	people.add(row);
 		    }else{
-		    	t.all.get(j).get(i).isCarrier = ofString(st.charAt(0));
-		    	t.all.get(j).get(i).setSex(ofString(st.charAt(1)));
-		    	i++;
+		    	Person temp = new Person(ofString(st.charAt(0)),ofString(st.charAt(1)));
+		    	people.get(j).add(temp);
+		    	
 		    }
 		    
 		  }
 		  br.close();
+		  br = new BufferedReader(new FileReader(file));
+		  j = -1;
+		  int i=0;
+		  while ((st = br.readLine()) != null){
+			    if(st.equals("")){
+			    	j++;
+			    	i=0;
+			    }else{
+			    	if(st.charAt(2) != 'e'){ //if dad then mom //double the people, double the mark
+			    		people.get(j).get(i).setFather(people.get(j+1).get(Character.getNumericValue(st.charAt(2))));
+			    		people.get(j+1).get(Character.getNumericValue(st.charAt(2))).children.add(people.get(j).get(i));
+			    		people.get(j).get(i).setMother(people.get(j+1).get(Character.getNumericValue(st.charAt(3))));
+			    		people.get(j+1).get(Character.getNumericValue(st.charAt(3))).children.add(people.get(j).get(i));
+			    	}
+			    	Person temp = new Person(ofString(st.charAt(0)),ofString(st.charAt(1)));
+			    	people.get(j).add(temp);
+			    	i++;
+			    }
+			    
+			  }
+		  
+		  
+		  
+		  Person init = people.get(0).get(0);
+		  
+		  
+		  
+		  
+		  
+		  br.close();
+		  Tree t = new Tree(people,init);
+		  return t;
 	}
 	static char ofBool(boolean x){
 		if(x){
