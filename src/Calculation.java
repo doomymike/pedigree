@@ -318,4 +318,180 @@ public class Calculation {
 		}
 	}
 	
+		boolean yLinkUp(Person p) {
+		if (p.getFather() == null && p.getMother() == null) {
+			if (p.getSex()) {
+				if (p.isAffected()) {
+					return false;
+				} else {
+					p.setHomoAffected(new Fraction(0, 1));
+					p.setHetero(new Fraction(0, 1));
+					p.setHomoUnaffected(new Fraction(1, 1));
+					return true;
+				}
+			} else {
+				if (p.isAffected()) {
+					p.setHomoAffected(new Fraction(1, 1));
+					p.setHetero(new Fraction(0, 1));
+					p.setHomoUnaffected(new Fraction(0, 1));
+				} else {
+					p.setHomoAffected(new Fraction(0, 1));
+					p.setHetero(new Fraction(0, 1));
+					p.setHomoUnaffected(new Fraction(1, 1));
+					return true;
+				}
+			}
+		}
+		return true;
+	}
+
+	boolean xLinkDominantUp(Person p) {
+		if (p.getSex() && p.isAffected() && p.getSpouse() != null) { // person is female and affected
+			if (p.getSpouse().isAffected()) { // partner is affected
+				for (int i = 0; i < p.children.size(); i++) {
+					if (p.children.get(i).getSex()) { // children is female
+						if(!p.children.get(i).isAffected()) {
+							return false;
+						}if(p.children.get(i).isCarrier) {
+							p.isCarrier = true;
+						}
+					} else { // children is male
+						if(!p.children.get(i).isAffected()) {
+							p.isCarrier = true;
+						}
+					}
+				}
+			} else { // partner is unaffected
+				for (int i = 0; i < p.children.size(); i++) {
+					if (p.children.get(i).getSex()) { // children is female
+						if(!p.children.get(i).isAffected()) {
+							p.isCarrier = true;
+						}
+					} else { // children is male
+						if(!p.children.get(i).isAffected()) {
+							p.isCarrier = true;
+						}
+					}
+				}
+			}
+		}
+
+		if (p.isCarrier) {
+			p.setHomoAffected(new Fraction(0, 1));
+			p.setHetero(new Fraction(1, 1));
+			p.setHomoUnaffected(new Fraction(0, 1));
+			return true;
+		}
+		return true;
+	}
+
+	boolean xLinkRecessiveUp(Person p) {
+		if (p.getSex() && !p.isAffected() && p.getSpouse() != null) { // person is female and unaffected
+			if (p.getSpouse().isAffected()) { // partner is affected
+				for (int i = 0; i < p.children.size(); i++) {
+					if(p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+					}
+				}
+			} else { // partner is unaffected
+				for (int i = 0; i < p.children.size(); i++) {
+					if (p.children.get(i).getSex()) { // children is female
+						if(p.children.get(i).isCarrier) {
+							p.isCarrier = true;
+						}
+					} else { // children is male
+						if(!p.children.get(i).isAffected()) {
+							p.isCarrier = true;
+						}
+					}
+				}
+			}
+		}
+
+		if (p.isCarrier) {
+			p.setHomoAffected(new Fraction(0, 1));
+			p.setHetero(new Fraction(1, 1));
+			p.setHomoUnaffected(new Fraction(0, 1));
+			return true;
+		}
+		return true;
+	}
+
+	boolean autosomalDominantUp(Person p) {
+		if (p.getSex() && p.isAffected() && p.getSpouse() != null) { // person is female and affected
+			if (p.getSpouse().isAffected()) { // partner is affected
+				for (int i = 0; i < p.children.size(); i++) {
+					if(!p.children.get(i).isAffected()) { // children is unaffected
+						p.isCarrier = true; // both parents are carriers
+					}else if(p.children.get(i).isCarrier) { // children is carrier
+						boolean person = hasCarrierAncestor(p, true);
+						boolean spouse = hasCarrierAncestor(p.getSpouse(), true);
+						if(person && !spouse) { // one has carriers ancestors
+							p.isCarrier = true;
+						}else if(!person && spouse) {
+							p.getSpouse().isCarrier = true;
+						}else if(person && spouse) {
+							// here we can guarantee both parent have a chance to be carriers
+						}else {
+							p.isCarrier = true;
+							p.getSpouse().isCarrier = false;
+						}
+					}
+				}
+			} else { // partner is unaffected
+				for (int i = 0; i < p.children.size(); i++) {
+					if(!p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+					}
+				}
+			}
+		}
+
+		if (p.isCarrier) {
+			p.setHomoAffected(new Fraction(0, 1));
+			p.setHetero(new Fraction(1, 1));
+			p.setHomoUnaffected(new Fraction(0, 1));
+			return true;
+		}
+		return true;
+	}
+
+	boolean autosomalRecessiveUp(Person p) {
+		if (p.getSex() && !p.isAffected() && p.getSpouse() != null) { // person is female and unaffected
+			if (!p.getSpouse().isAffected()) { // partner is unaffected
+				for (int i = 0; i < p.children.size(); i++) {
+					if(p.children.get(i).isAffected()) { // children is affected
+						p.isCarrier = true; // both parents are carriers
+					}else if(p.children.get(i).isCarrier) { // children is carrier
+						boolean person = hasCarrierAncestor(p, false);
+						boolean spouse = hasCarrierAncestor(p.getSpouse(), false);
+						if(person && !spouse) { // one has carriers ancestors
+							p.isCarrier = true;
+						}else if(!person && spouse) {
+							p.getSpouse().isCarrier = true;
+						}else if(person && spouse) {
+							// here we can guarantee both parent have a chance to be carriers
+						}else {
+							p.isCarrier = true;
+							p.getSpouse().isCarrier = false;
+						}
+					}
+				}
+			} else { // partner is affected
+				for (int i = 0; i < p.children.size(); i++) {
+					if(p.children.get(i).isAffected()) {
+						p.isCarrier = true;
+					}
+				}
+			}
+		}
+
+		if (p.isCarrier) {
+			p.setHomoAffected(new Fraction(0, 1));
+			p.setHetero(new Fraction(1, 1));
+			p.setHomoUnaffected(new Fraction(0, 1));
+			return true;
+		}
+		return true;
+	}
 }
