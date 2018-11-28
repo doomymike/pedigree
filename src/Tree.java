@@ -45,6 +45,38 @@ public class Tree {
 		}
 		return false;
 	}
+	
+	public boolean hasCarrierAncestor(Person p, boolean dominant) {
+		if(dominant) {
+			if(!p.isAffected()) {
+				return true;
+			}else if(p.getFather() != null && p.getMother() != null){
+				if(hasCarrierAncestor(p.getFather(),dominant)) {
+					return true;
+				}else if (hasCarrierAncestor(p.getMother(),dominant)){
+					return true;
+				}else {
+					return false;
+				}
+			}else {
+				return false;
+			}
+		}else {
+			if(p.isAffected()) {
+				return true;
+			}else if(p.getFather() != null && p.getMother() != null){
+				if(hasCarrierAncestor(p.getFather(),dominant)) {
+					return true;
+				}else if (hasCarrierAncestor(p.getMother(),dominant)){
+					return true;
+				}else {
+					return false;
+				}
+			}else {
+				return false;
+			}
+		}
+	}
 
 	public boolean addParents(Person person) {
 		if (person.getFather() == null && person.getMother() == null) {
