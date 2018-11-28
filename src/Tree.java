@@ -16,6 +16,11 @@ public class Tree {
 		addParents(initialPerson.getFather());
 		addChild(initialPerson.getFather().getFather());
 	}
+	
+	Tree(ArrayList<ArrayList<Person>> people, Person initial){
+		all = people;
+		initialPerson = initial;
+	}
 
 	public Person getPerson(int generation, int number) {
 		return all.get(generation).get(number);
