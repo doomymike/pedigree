@@ -16,10 +16,6 @@ public class Tree {
 		addParents(initialPerson.getFather());
 		addChild(initialPerson.getFather().getFather());
 	}
-	
-	Tree(ArrayList<ArrayList<Person>> people){
-		this.all = people;
-	}
 
 	public Person getPerson(int generation, int number) {
 		return all.get(generation).get(number);
@@ -38,12 +34,12 @@ public class Tree {
 		return ans;
 	}
 
-	public boolean isAncestor(Person person) {
-		if (person == initialPerson) {
+	public boolean isAncestor(Person p) {
+		if (p == initialPerson) {
 			return true;
 		}
-		for (int i = 0; i < person.children.size(); i++) {
-			if (isAncestor(person.children.get(i))) {
+		for (int i = 0; i < p.children.size(); i++) {
+			if (isAncestor(p.children.get(i))) {
 				return true;
 			}
 		}
@@ -509,6 +505,7 @@ public class Tree {
 					p.setHomoAffected(new Fraction(1, 1));
 					p.setHetero(new Fraction(0, 1));
 					p.setHomoUnaffected(new Fraction(0, 1));
+					return true;
 				} else {
 					p.setHomoAffected(new Fraction(0, 1));
 					p.setHetero(new Fraction(0, 1));
@@ -555,7 +552,16 @@ public class Tree {
 			p.setHomoAffected(new Fraction(0, 1));
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
-			return true;
+		}else if (p.getFather() == null && p.getMother() == null) {
+			if (p.isAffected()) {
+				p.setHomoAffected(new Fraction(1, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(0, 1));
+			} else {
+				p.setHomoAffected(new Fraction(0, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(1, 1));
+			}
 		}
 		return true;
 	}
@@ -588,6 +594,16 @@ public class Tree {
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
 			return true;
+		}else if (p.getFather() == null && p.getMother() == null) {
+			if (p.isAffected()) {
+				p.setHomoAffected(new Fraction(1, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(0, 1));
+			} else {
+				p.setHomoAffected(new Fraction(0, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(1, 1));
+			}
 		}
 		return true;
 	}
@@ -627,6 +643,16 @@ public class Tree {
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
 			return true;
+		}else if (p.getFather() == null && p.getMother() == null) {
+			if (p.isAffected()) {
+				p.setHomoAffected(new Fraction(1, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(0, 1));
+			} else {
+				p.setHomoAffected(new Fraction(0, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(1, 1));
+			}
 		}
 		return true;
 	}
@@ -666,6 +692,16 @@ public class Tree {
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
 			return true;
+		}else if (p.getFather() == null && p.getMother() == null) {
+			if (p.isAffected()) {
+				p.setHomoAffected(new Fraction(1, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(0, 1));
+			} else {
+				p.setHomoAffected(new Fraction(0, 1));
+				p.setHetero(new Fraction(0, 1));
+				p.setHomoUnaffected(new Fraction(1, 1));
+			}
 		}
 		return true;
 	}
