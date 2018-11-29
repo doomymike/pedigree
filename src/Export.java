@@ -96,13 +96,13 @@ public class Export {
 			    	j++;
 			    	i=0;
 			    }else{
-			    	if(st.charAt(2) != 'e'){ //if dad then mom //double the people, double the mark
+			    	if(st.charAt(2) != 'e'){ //if dad then mom is guaranteed
 			    		people.get(j).get(i).setFather(people.get(j+1).get(Character.getNumericValue(st.charAt(2))));
 			    		people.get(j+1).get(Character.getNumericValue(st.charAt(2))).children.add(people.get(j).get(i));
 			    		people.get(j).get(i).setMother(people.get(j+1).get(Character.getNumericValue(st.charAt(3))));
 			    		people.get(j+1).get(Character.getNumericValue(st.charAt(3))).children.add(people.get(j).get(i));
+			    		people.get(j+1).get(Character.getNumericValue(st.charAt(3))).setSpouse(people.get(j+1).get(Character.getNumericValue(st.charAt(2))));
 			    	}
-			    	
 			    	i++;
 			    }
 			    
