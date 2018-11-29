@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH MORE THAN 10 PEOPLE IN A SINGLE ARRAYLIST AAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 
 public class Export {
 	
@@ -23,6 +22,7 @@ public class Export {
 				writer.print(ofBool(t.all.get(i).get(j).getSex()));
 				writer.print(ofBool(t.all.get(i).get(j).isCarrier));
 				
+				writer.println();
 				//parent finding
 				if(t.all.get(i).get(j).getFather()!= null){
 					for (int l =0;l<t.all.get(i+1).size();l++){
@@ -34,6 +34,7 @@ public class Export {
 					writer.print('e');
 				}
 				
+				writer.println();
 				if(t.all.get(i).get(j).getMother()!= null){
 					for (int l =0;l<t.all.get(i+1).size();l++){
 						if (t.all.get(i+1).get(l) == t.all.get(i).get(j).getMother()){
@@ -84,6 +85,8 @@ public class Export {
 		    	Person temp = new Person(ofString(st.charAt(0)),ofString(st.charAt(1)));
 		    	people.get(j).add(temp);
 		    	
+		    	st = br.readLine();
+		    	st = br.readLine();
 		    }
 		    
 		  }
@@ -96,12 +99,14 @@ public class Export {
 			    	j++;
 			    	i=0;
 			    }else{
-			    	if(st.charAt(2) != 'e'){ //if dad then mom is guaranteed
-			    		people.get(j).get(i).setFather(people.get(j+1).get(Character.getNumericValue(st.charAt(2))));
-			    		people.get(j+1).get(Character.getNumericValue(st.charAt(2))).children.add(people.get(j).get(i));
-			    		people.get(j).get(i).setMother(people.get(j+1).get(Character.getNumericValue(st.charAt(3))));
-			    		people.get(j+1).get(Character.getNumericValue(st.charAt(3))).children.add(people.get(j).get(i));
-			    		people.get(j+1).get(Character.getNumericValue(st.charAt(3))).setSpouse(people.get(j+1).get(Character.getNumericValue(st.charAt(2))));
+			    	String dad = br.readLine();
+			    	String mom = br.readLine();
+			    	if(!dad.equals("e")){ //if dad then mom is guaranteed
+			    		people.get(j).get(i).setFather(people.get(j+1).get(Integer.parseInt(dad)));
+			    		people.get(j+1).get(Integer.parseInt(dad)).children.add(people.get(j).get(i));
+			    		people.get(j).get(i).setMother(people.get(j+1).get(Integer.parseInt(mom)));
+			    		people.get(j+1).get(Integer.parseInt(mom)).children.add(people.get(j).get(i));
+			    		people.get(j+1).get(Integer.parseInt(mom)).setSpouse(people.get(j+1).get(Integer.parseInt(dad)));
 			    	}
 			    	i++;
 			    }
@@ -136,3 +141,4 @@ public class Export {
 	}
 	
 }
+
