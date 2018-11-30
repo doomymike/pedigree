@@ -19,7 +19,7 @@ public class Fraction {
 	}
 	
 	double getNumber() {
-		return numerator/denominaor;
+		return (double)numerator/(double)denominaor;
 	}
 	
 	Fraction add(Fraction other) {
