@@ -15,7 +15,12 @@ public class Tree {
 		addParents(initialPerson.getMother());
 		addParents(initialPerson.getFather());
 		addChild(initialPerson.getFather().getFather());
+		addChild(initialPerson.getFather());
+		addChild(initialPerson.getMother().getFather());
+		getPerson(1,0).setSex(true);
+		getPerson(0,1).setSex(true);
 	}
+	
 	
 	Tree(ArrayList<ArrayList<Person>> people, Person initial){
 		all = people;
@@ -166,7 +171,9 @@ public class Tree {
 	 */
 	boolean yLinked(Person p) {
 		Fraction homoAffected, hetero, homoUnaffected;
-
+		if(p.getHomoAffected() != null) { // already set
+			return true;
+		}
 		if (p.getSex()) { // person is woman
 			// Calculates homoAffected
 			homoAffected = new Fraction(0, 1);
@@ -219,7 +226,9 @@ public class Tree {
 	 */
 	boolean xLinkDominant(Person p) {
 		Fraction homoAffected, hetero, homoUnaffected;
-
+		if(p.getHomoAffected() != null) { // already set
+			return true;
+		}
 		if (p.getSex()) { // person is woman
 			// Calculates homoAffected
 			homoAffected = new Fraction(0, 1);
@@ -256,8 +265,20 @@ public class Tree {
 			homoUnaffected = homoUnaffected.add(p.getMother().getHomoUnaffected()); // mother xx
 			homoUnaffected = homoUnaffected.add(p.getMother().getHetero().multiply(new Fraction(1, 2))); // mother Xx
 		}
-
-		if (p.isAffected()) { // person is affected
+		
+		if (p.isCarrier){
+			if (hetero.getNumber() > 0) {
+				homoAffected = new Fraction(0, 1);
+				hetero = new Fraction(1, 1);
+				homoUnaffected = new Fraction(0, 1);
+				p.setHomoAffected(homoAffected);
+				p.setHetero(hetero);
+				p.setHomoUnaffected(homoUnaffected);
+				return true;
+			} else {
+				return false;
+			}
+		}else if (p.isAffected()) { // person is affected
 			if (homoUnaffected.getNumber() < 1) {
 				Fraction temp;
 				temp = homoAffected.add(hetero);
@@ -275,8 +296,8 @@ public class Tree {
 		} else { // person is unaffected
 			if (homoUnaffected.getNumber() > 0) {
 				homoAffected = new Fraction(0, 1);
-				homoUnaffected = new Fraction(0, 1);
-				hetero = new Fraction(1, 1);
+				hetero = new Fraction(0, 1);
+				homoUnaffected = new Fraction(1, 1);
 				p.setHomoAffected(homoAffected);
 				p.setHetero(hetero);
 				p.setHomoUnaffected(homoUnaffected);
@@ -296,7 +317,9 @@ public class Tree {
 	 */
 	boolean xLinkRecessive(Person p) {
 		Fraction homoAffected, hetero, homoUnaffected;
-
+		if(p.getHomoAffected() != null) { // already set
+			return true;
+		}
 		if (p.getSex()) { // person is woman
 			// Calculates homoAffected
 			homoAffected = new Fraction(0, 1);
@@ -333,8 +356,20 @@ public class Tree {
 			homoUnaffected = homoUnaffected.add(p.getMother().getHomoUnaffected()); // mother xx
 			homoUnaffected = homoUnaffected.add(p.getMother().getHetero().multiply(new Fraction(1, 2))); // mother Xx
 		}
-
-		if (p.isAffected()) { // person is affected
+		
+		if (p.isCarrier){
+			if (hetero.getNumber() > 0) {
+				homoAffected = new Fraction(0, 1);
+				hetero = new Fraction(1, 1);
+				homoUnaffected = new Fraction(0, 1);
+				p.setHomoAffected(homoAffected);
+				p.setHetero(hetero);
+				p.setHomoUnaffected(homoUnaffected);
+				return true;
+			} else {
+				return false;
+			}
+		}else if (p.isAffected()) { // person is affected
 			if (homoAffected.getNumber() > 0) {
 				homoAffected = new Fraction(1, 1);
 				homoUnaffected = new Fraction(0, 1);
@@ -373,7 +408,9 @@ public class Tree {
 	 *         dominant condition
 	 */
 	boolean autosomalDominant(Person p) { // done
-
+		if(p.getHomoAffected() != null) { // already set
+			return true;
+		}
 		// Calculates homoAffected
 		Fraction homoAffected = new Fraction(0, 1);
 		homoAffected = homoAffected.add(p.getFather().getHomoAffected().multiply(p.getMother().getHomoAffected()));
@@ -399,7 +436,19 @@ public class Tree {
 		Fraction hetero = new Fraction(1, 1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 
-		if (p.isAffected()) { // person is affected
+		if (p.isCarrier){
+			if (hetero.getNumber() > 0) {
+				homoAffected = new Fraction(0, 1);
+				hetero = new Fraction(1, 1);
+				homoUnaffected = new Fraction(0, 1);
+				p.setHomoAffected(homoAffected);
+				p.setHetero(hetero);
+				p.setHomoUnaffected(homoUnaffected);
+				return true;
+			} else {
+				return false;
+			}
+		} else if (p.isAffected()) { // person is affected
 			if (homoUnaffected.getNumber() < 1) {
 				Fraction temp;
 				temp = homoAffected.add(hetero);
@@ -414,11 +463,11 @@ public class Tree {
 			} else {
 				return false;
 			}
-		} else { // person is unaffected
+		}  else { // person is unaffected
 			if (homoUnaffected.getNumber() > 0) {
 				homoAffected = new Fraction(0, 1);
-				homoUnaffected = new Fraction(0, 1);
-				hetero = new Fraction(1, 1);
+				hetero = new Fraction(0, 1);
+				homoUnaffected = new Fraction(1, 1);
 				p.setHomoAffected(homoAffected);
 				p.setHetero(hetero);
 				p.setHomoUnaffected(homoUnaffected);
@@ -437,7 +486,9 @@ public class Tree {
 	 *         recessive condition
 	 */
 	boolean autosomalRecessive(Person p) { // done
-
+		if(p.getHomoAffected() != null) { // already set
+			return true;
+		}
 		// Calculates homoAffected
 		Fraction homoAffected = new Fraction(0, 1);
 		homoAffected = homoAffected.add(p.getFather().getHomoAffected().multiply(p.getMother().getHomoAffected()));
@@ -463,7 +514,19 @@ public class Tree {
 		Fraction hetero = new Fraction(1, 1);
 		hetero = hetero.subtract(homoAffected.add(homoUnaffected));
 
-		if (p.isAffected()) { // person is affected
+		if (p.isCarrier){
+			if (hetero.getNumber() > 0) {
+				homoAffected = new Fraction(0, 1);
+				hetero = new Fraction(1, 1);
+				homoUnaffected = new Fraction(0, 1);
+				p.setHomoAffected(homoAffected);
+				p.setHetero(hetero);
+				p.setHomoUnaffected(homoUnaffected);
+				return true;
+			} else {
+				return false;
+			}
+		}else if (p.isAffected()) { // person is affected
 			if (homoAffected.getNumber() > 0) {
 				homoAffected = new Fraction(1, 1);
 				homoUnaffected = new Fraction(0, 1);
@@ -475,7 +538,7 @@ public class Tree {
 			} else {
 				return false;
 			}
-		} else { // person is unaffected
+		}   else { // person is unaffected
 			if (homoAffected.getNumber() < 1) {
 				Fraction temp;
 				temp = homoUnaffected.add(hetero);
@@ -553,7 +616,7 @@ public class Tree {
 			}
 		}
 
-		if (p.isCarrier) {
+		if (p.isCarrier && p.getFather() == null && p.getMother() == null) {
 			p.setHomoAffected(new Fraction(0, 1));
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
@@ -586,7 +649,7 @@ public class Tree {
 							p.isCarrier = true;
 						}
 					} else { // children is male
-						if(!p.children.get(i).isAffected()) {
+						if(p.children.get(i).isAffected()) {
 							p.isCarrier = true;
 						}
 					}
@@ -594,7 +657,7 @@ public class Tree {
 			}
 		}
 
-		if (p.isCarrier) {
+		if (p.isCarrier && p.getFather() == null && p.getMother() == null) {
 			p.setHomoAffected(new Fraction(0, 1));
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
@@ -614,7 +677,7 @@ public class Tree {
 	}
 
 	boolean autosomalDominantUp(Person p) {
-		if (p.getSex() && p.isAffected() && p.getSpouse() != null) { // person is female and affected
+		if (p.isAffected() && p.getSpouse() != null) { // person is affected
 			if (p.getSpouse().isAffected()) { // partner is affected
 				for (int i = 0; i < p.children.size(); i++) {
 					if(!p.children.get(i).isAffected()) { // children is unaffected
@@ -629,8 +692,9 @@ public class Tree {
 						}else if(person && spouse) {
 							// here we can guarantee both parent have a chance to be carriers
 						}else {
-							p.isCarrier = true;
-							p.getSpouse().isCarrier = false;
+							if(!p.getSpouse().isCarrier) {
+								p.isCarrier = true;
+							}
 						}
 					}
 				}
@@ -643,7 +707,7 @@ public class Tree {
 			}
 		}
 
-		if (p.isCarrier) {
+		if (p.isCarrier && p.getFather() == null && p.getMother() == null) {
 			p.setHomoAffected(new Fraction(0, 1));
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
@@ -663,7 +727,7 @@ public class Tree {
 	}
 
 	boolean autosomalRecessiveUp(Person p) {
-		if (p.getSex() && !p.isAffected() && p.getSpouse() != null) { // person is female and unaffected
+		if (!p.isAffected() && p.getSpouse() != null) { // person is unaffected
 			if (!p.getSpouse().isAffected()) { // partner is unaffected
 				for (int i = 0; i < p.children.size(); i++) {
 					if(p.children.get(i).isAffected()) { // children is affected
@@ -678,8 +742,9 @@ public class Tree {
 						}else if(person && spouse) {
 							// here we can guarantee both parent have a chance to be carriers
 						}else {
-							p.isCarrier = true;
-							p.getSpouse().isCarrier = false;
+							if(!p.getSpouse().isCarrier) {
+								p.isCarrier = true;
+							}
 						}
 					}
 				}
@@ -692,7 +757,7 @@ public class Tree {
 			}
 		}
 
-		if (p.isCarrier) {
+		if (p.isCarrier && p.getFather() == null && p.getMother() == null) {
 			p.setHomoAffected(new Fraction(0, 1));
 			p.setHetero(new Fraction(1, 1));
 			p.setHomoUnaffected(new Fraction(0, 1));
