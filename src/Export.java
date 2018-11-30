@@ -125,7 +125,7 @@ public class Export {
 		  Tree t = new Tree(people,init);
 		  return t;
 	}
-	static char ofBool(boolean x){
+	private static char ofBool(boolean x){
 		if(x){
 			return '1';
 		}
@@ -133,7 +133,7 @@ public class Export {
 		
 	}
 	
-	static boolean ofString(char x){
+	private static boolean ofString(char x){
 		if (x=='0'){
 			return false;
 		}
