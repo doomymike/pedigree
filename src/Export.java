@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Export {
 	
-	static void yeet(Tree t)throws IOException {
-		PrintWriter writer = new PrintWriter("test.txt", "UTF-8");
+	public static void yeet(Tree t,String name)throws IOException {
+		PrintWriter writer = new PrintWriter(name, "UTF-8");
 		
 		writer.println();
 		for (int i =0;i<t.all.size();i++){
@@ -57,13 +57,13 @@ public class Export {
 	public static void main(String[] args) throws IOException{
 		Tree tree = new Tree();
 		
-		yeet(tree);
-		yeet(unyeet());
-		unyeet();
+		yeet(tree,"test.txt");
+		yeet(unyeet("test.txt"),"test.txt");
+		unyeet("test.txt");
 	}
 	
-	static Tree unyeet() throws IOException{
-		File file = new File("test.txt"); 
+	public static Tree unyeet(String name) throws IOException{
+		File file = new File(name); 
 		  
 		  BufferedReader br = new BufferedReader(new FileReader(file)); 
 		  
@@ -141,4 +141,3 @@ public class Export {
 	}
 	
 }
-
