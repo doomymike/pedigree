@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-//                                    CREATE EXAMPLES TO SHOW
 public class Export {
 	
 	public static void yeet(Tree t,String name)throws IOException {
 		PrintWriter writer = new PrintWriter(name, "UTF-8");
+		
+		writer.println(t.getPosition(t.initialPerson)[0]);
+		writer.println(t.getPosition(t.initialPerson)[1]);
 		
 		writer.println();
 		for (int i =0;i<t.all.size();i++){
@@ -20,7 +22,7 @@ public class Export {
 				
 				
 				writer.print(ofBool(t.all.get(i).get(j).getSex()));
-				writer.print(ofBool(t.all.get(i).get(j).isCarrier));
+				writer.print(ofBool(t.all.get(i).get(j).isAffected()));
 				
 				writer.println();
 				//parent finding
@@ -57,15 +59,21 @@ public class Export {
 	public static void main(String[] args) throws IOException{
 		Tree tree = new Tree();
 		
-		yeet(tree,"test.txt");
-		yeet(unyeet("test.txt"),"test.txt");
-		unyeet("test.txt");
+		yeet(unyeet("autorec.txt"),"t1.txt");
+		
+//		yeet(tree,"test.txt");
+//		yeet(unyeet("test.txt"),"test.txt");
+//		unyeet("test.txt");
+		
 	}
 	
 	public static Tree unyeet(String name) throws IOException{
 		File file = new File(name); 
 		  
 		  BufferedReader br = new BufferedReader(new FileReader(file)); 
+		  
+		  int level = Integer.parseInt(br.readLine());
+		  int location = Integer.parseInt(br.readLine());
 		  
 		  String st;
 		  int j = -1;
@@ -92,6 +100,8 @@ public class Export {
 		  }
 		  br.close();
 		  br = new BufferedReader(new FileReader(file));
+		  br.readLine();
+		  br.readLine();
 		  j = -1;
 		  int i=0;
 		  while ((st = br.readLine()) != null){
@@ -115,7 +125,7 @@ public class Export {
 		  
 		  
 		  
-		  Person init = people.get(0).get(0);
+		  Person init = people.get(level).get(location);
 		  
 		  
 		  
@@ -141,3 +151,4 @@ public class Export {
 	}
 	
 }
+
