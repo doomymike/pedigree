@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Panel extends JPanel implements Refreshable {
 	private Tree tree;
-	private ArrayList<ArrayList<DisplayNode>> people = new ArrayList<>();
+	private ArrayList<ArrayList<DisplayPeople>> nodes = new ArrayList<>();
 
 	public Panel(Tree tree) {
 		// TODO: remove next line and corresponding import
@@ -15,26 +15,25 @@ public class Panel extends JPanel implements Refreshable {
 	}
 
 	public void refresh() {
+		ArrayList<ArrayList<DisplayNode>> people = new ArrayList<>();
+		nodes.clear();
 		for (List<Person> generation : tree.all) {
 			ArrayList<DisplayNode> displayGeneration = new ArrayList<>();
 			for (Person person : generation) {
 				displayGeneration.add(new DisplayNode(person, tree, this));
 			}
+			nodes.add(new ArrayList<>());
 			people.add(displayGeneration);
 		}
-		positionPeople();
+		link(people);
 	}
 
-	private void positionPeople() {
-		// TODO: will hold minimum and maximum relative x and y positions so everything can be translated
-		int minX = 0;
-		int minY = 0;
-		int maxX = 0;
-		int maxY = 0;
+	private void link(ArrayList<ArrayList<DisplayNode>> people) {
 		// Iterate over generations, starting from youngest first
 		for (int i = people.size() - 1; i >= 0; i--) {
 			// Iterate over all people in the generation
 			for (DisplayNode person : people.get(i)) {
+				// Do parent-specific stuff
 				if (person.getPerson().getMother() != null) {
 					// Connect to mother if possible
 					for (int j = 0; j < people.get(i + 1).size(); j++) {
@@ -51,13 +50,25 @@ public class Panel extends JPanel implements Refreshable {
 							break;
 						}
 					}
+
+					if (person.getParents().getChildren() == null) {
+						// Make a children node if the parent node doesn't have one yet
+						DisplayChildren children = new DisplayChildren();
+						nodes.get(i).add(children);
+						person.getParents().setChildren(children);
+					}
+
+					if (person.getPerson().getSpouse() == null) {
+						// Add this person to the children node
+						person.getParents().getChildren().add(person);
+					}
 				}
 
 				if (person.getPerson().getSpouse() != null) {
 					// Find the spouse and add a parent node with this person and the spouse
 					for (int j = 0; j < people.get(i).size(); j++) {
 						// TODO: only check the mother or father since sex is already known, delete the useless contains method
-						if (people.get(i).get(j).contains(person.getPerson().getSpouse())) {
+						if (people.get(i).get(j).getPerson().equals(person.getPerson().getSpouse())) {
 							DisplayNode spouse = people.get(i).get(j);
 							DisplayParents partnership;
 							if (spouse.getPerson().getSex() == Person.MALE) {
@@ -73,24 +84,10 @@ public class Panel extends JPanel implements Refreshable {
 					if (person.getParents() != null) {
 						person.getParents().getChildren().add(person.getPartnership());
 					}
+					nodes.get(i).add(person.getPartnership());
+				} else if (person.getParents() == null) {
+					nodes.get(i).add(person);
 				}
-
-				if (person.getParents() == null) {
-					// Everything else deals with parents
-					continue;
-				}
-
-				if (person.getParents().getChildren() == null) {
-					// Make a children node if the parent node doesn't have one yet
-					person.getParents().setChildren(new DisplayChildren());
-				}
-
-				if (person.getPerson().getSpouse() == null) {
-					// Add this person to the children node
-					person.getParents().getChildren().add(person);
-				}
-
-				// TODO: actual positioning logic using position of children and other people in generation
 			}
 		}
 	}

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * List of children and their spouses
  */
-public class DisplayChildren {
+public class DisplayChildren extends DisplayPeople {
 	private ArrayList<DisplayPeople> children;
 
 	public DisplayChildren() {
@@ -19,5 +19,15 @@ public class DisplayChildren {
 		}
 		// If we're sure we don't already have them, add them
 		children.add(person);
+	}
+
+	@Override
+	public boolean contains(Person person) {
+		for (DisplayPeople child : children) {
+			if (!child.contains(person)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
