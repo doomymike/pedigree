@@ -87,6 +87,17 @@ public class Tree {
 			}
 		}
 	}
+	
+	public void reset() {
+		for(int i = 0;i<all.size();i++) {
+			for(int j = 0;j<all.get(i).size();j++) {
+				all.get(i).get(j).setHetero(null);
+				all.get(i).get(j).setHomoAffected(null);
+				all.get(i).get(j).setHomoUnaffected(null);
+				all.get(i).get(j).isCarrier = false;
+			}
+		}
+	}
 
 	public boolean addParents(Person person) {
 		if (person.getFather() == null && person.getMother() == null) {
