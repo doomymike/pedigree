@@ -5,9 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+//                                                                  CREATE EXAMPLES TO SHOW
 public class Export {
 	
-	public static void yeet(Tree t,String name)throws IOException {
+	public static void putOut(Tree t,String name)throws IOException {
 		PrintWriter writer = new PrintWriter(name, "UTF-8");
 		
 		writer.println(t.getPosition(t.initialPerson)[0]);
@@ -56,18 +57,8 @@ public class Export {
 		writer.close();
 	}
 	
-	public static void main(String[] args) throws IOException{
-		Tree tree = new Tree();
-		
-		yeet(unyeet("autorec.txt"),"t1.txt");
-		
-//		yeet(tree,"test.txt");
-//		yeet(unyeet("test.txt"),"test.txt");
-//		unyeet("test.txt");
-		
-	}
 	
-	public static Tree unyeet(String name) throws IOException{
+	public static Tree takeIn(String name) throws IOException{
 		File file = new File(name); 
 		  
 		  BufferedReader br = new BufferedReader(new FileReader(file)); 
@@ -151,4 +142,5 @@ public class Export {
 	}
 	
 }
+
 
