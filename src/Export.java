@@ -8,6 +8,13 @@ import java.util.ArrayList;
 //                                                                  CREATE EXAMPLES TO SHOW
 public class Export {
 	
+	/**
+	 * putOut
+	 * @param t
+	 * @param name
+	 * @throws IOException
+	 * Takes tree and puts information out into a file
+	 */
 	public static void putOut(Tree t,String name)throws IOException {
 		PrintWriter writer = new PrintWriter(name, "UTF-8");
 		
@@ -19,14 +26,15 @@ public class Export {
 			
 			for (int j = 0;j< t.all.get(i).size();j++){
 				
-				
-				
-				
 				writer.print(ofBool(t.all.get(i).get(j).getSex()));
 				writer.print(ofBool(t.all.get(i).get(j).isAffected()));
 				
 				writer.println();
+				
+				
 				//parent finding
+				
+				//writes father to file
 				if(t.all.get(i).get(j).getFather()!= null){
 					for (int l =0;l<t.all.get(i+1).size();l++){
 						if (t.all.get(i+1).get(l) == t.all.get(i).get(j).getFather()){
@@ -37,6 +45,7 @@ public class Export {
 					writer.print('e');
 				}
 				
+				//writes mother to file
 				writer.println();
 				if(t.all.get(i).get(j).getMother()!= null){
 					for (int l =0;l<t.all.get(i+1).size();l++){
@@ -57,12 +66,19 @@ public class Export {
 		writer.close();
 	}
 	
-	
+	/**
+	 * takeIn
+	 * @param name
+	 * @return
+	 * @throws IOException
+	 * Takes in file and converts to tree
+	 */
 	public static Tree takeIn(String name) throws IOException{
 		File file = new File(name); 
 		  
 		  BufferedReader br = new BufferedReader(new FileReader(file)); 
 		  
+		  //initial person location
 		  int level = Integer.parseInt(br.readLine());
 		  int location = Integer.parseInt(br.readLine());
 		  
@@ -71,9 +87,7 @@ public class Export {
 		  
 		  
 		  ArrayList<ArrayList<Person>> people = new ArrayList<ArrayList<Person>>();
-		  
-		  
-
+		    
 		  while ((st = br.readLine()) != null){
 		    System.out.println(st);
 		    if(st.equals("")){
@@ -90,9 +104,11 @@ public class Export {
 		    
 		  }
 		  br.close();
+		  //resets to top of page
 		  br = new BufferedReader(new FileReader(file));
 		  br.readLine();
 		  br.readLine();
+		  
 		  j = -1;
 		  int i=0;
 		  while ((st = br.readLine()) != null){
@@ -103,6 +119,7 @@ public class Export {
 			    	String dad = br.readLine();
 			    	String mom = br.readLine();
 			    	if(!dad.equals("e")){ //if dad then mom is guaranteed
+			    		//assigns children and spouses
 			    		people.get(j).get(i).setFather(people.get(j+1).get(Integer.parseInt(dad)));
 			    		people.get(j+1).get(Integer.parseInt(dad)).children.add(people.get(j).get(i));
 			    		people.get(j).get(i).setMother(people.get(j+1).get(Integer.parseInt(mom)));
@@ -117,15 +134,18 @@ public class Export {
 		  
 		  
 		  Person init = people.get(level).get(location);
-		  
-		  
-		  
-		  
+		  	  
 		  
 		  br.close();
 		  Tree t = new Tree(people,init);
 		  return t;
 	}
+	/**
+	 * ofBool
+	 * @param x
+	 * @return
+	 * Converts boolean to char
+	 */
 	private static char ofBool(boolean x){
 		if(x){
 			return '1';
@@ -134,6 +154,12 @@ public class Export {
 		
 	}
 	
+	/**
+	 * ofString
+	 * @param x
+	 * @return
+	 * Converts char to boolean
+	 */
 	private static boolean ofString(char x){
 		if (x=='0'){
 			return false;
@@ -142,5 +168,6 @@ public class Export {
 	}
 	
 }
+
 
 
