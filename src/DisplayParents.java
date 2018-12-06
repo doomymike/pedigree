@@ -12,29 +12,22 @@ public class DisplayParents extends DisplayPeople {
 
 	public DisplayParents(DisplayNode mother, DisplayNode father) {
 		this();
-		this.mother = mother;
-		this.father = father;
-	}
-
-	public void setChildren(DisplayChildren children) {
-		this.children = children;
+		setMother(mother);
+		setFather(father);
 	}
 
 	public DisplayChildren getChildren() {
 		return children;
 	}
 
-	@Override
-	public boolean contains(Person person) {
-		return mother.contains(person) || father.contains(person);
-	}
-
 	public void setMother(DisplayNode mother) {
 		this.mother = mother;
+		mother.setPartnership(this);
 	}
 
 	public void setFather(DisplayNode father) {
 		this.father = father;
+		father.setPartnership(this);
 	}
 
 	public DisplayNode getMother() {

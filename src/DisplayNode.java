@@ -3,7 +3,6 @@ import java.awt.Dimension;
 
 public class DisplayNode extends DisplayPeople {
 	private final Person person;
-	private DisplayChildren siblings;
 	private DisplayParents parents;
 	private DisplayParents partnership;
 
@@ -15,11 +14,6 @@ public class DisplayNode extends DisplayPeople {
 
 	public DisplayParents getParents() {
 		return parents;
-	}
-
-	@Override
-	public boolean contains(Person person) {
-		return this.person == person;
 	}
 
 	public Person getPerson() {

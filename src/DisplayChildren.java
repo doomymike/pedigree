@@ -21,13 +21,7 @@ public class DisplayChildren extends DisplayPeople {
 		children.add(person);
 	}
 
-	@Override
-	public boolean contains(Person person) {
-		for (DisplayPeople child : children) {
-			if (!child.contains(person)) {
-				return false;
-			}
-		}
-		return true;
+	public boolean isEmpty() {
+		return children.isEmpty();
 	}
 }
