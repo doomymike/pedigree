@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class DisplayNode extends DisplayPeople {
 	private final Person person;
@@ -11,13 +10,7 @@ public class DisplayNode extends DisplayPeople {
 
 	public DisplayNode(Person person, Tree tree, Refreshable refreshable) {
 		this.person = person;
-		// TODO: turn this into square/circle
-		if (person.getSex() == Person.MALE) {
-			setBackground(Color.BLACK);
-		} else {
-			setBackground(Color.ORANGE);
-		}
-		setPreferredSize(new Dimension(100, 30));
+		setPreferredSize(new Dimension(50, 50));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -45,6 +38,24 @@ public class DisplayNode extends DisplayPeople {
 
 	public DisplayParents getPartnership() {
 		return partnership;
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		if (person.getSex() == Person.FEMALE) {
+			if (person.isAffected()) {
+				g.fillOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+			} else {
+				g.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+			}
+		} else {
+			if (person.isAffected()) {
+				g.fillRect(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+			} else {
+				g.drawRect(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+			}
+		}
 	}
 
 	@Override

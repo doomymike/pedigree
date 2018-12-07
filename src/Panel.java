@@ -99,6 +99,7 @@ public class Panel extends JPanel implements Refreshable {
 	}
 
 	private void draw() {
+		// TODO: render in reverse order
 		for (int i = 0; i < nodes.size(); i++) {
 			ArrayList<DisplayPeople> generation = nodes.get(i);
 			DisplayGeneration displayGeneration = new DisplayGeneration(i);

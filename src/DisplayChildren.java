@@ -10,6 +10,7 @@ public class DisplayChildren extends DisplayPeople {
 
 	public DisplayChildren() {
 		this.children = new ArrayList<>();
+		// TODO: remove
 		setBorder(BorderFactory.createLineBorder(Color.PINK));
 	}
 
