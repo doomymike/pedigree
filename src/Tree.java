@@ -9,7 +9,11 @@ import java.util.ArrayList;
 public class Tree {
 	ArrayList<ArrayList<Person>> all = new ArrayList<ArrayList<Person>>();
 	Person initialPerson;
-
+	
+	/**
+	 * Tree
+	 * Constructs initial tree
+	 */
 	Tree() {
 		initialPerson = new Person(false, false);
 
@@ -21,16 +25,37 @@ public class Tree {
 		
 	}
 	
-	
+	/**
+	 * Tree
+	 * 
+	 * @param people
+	 * @param initial
+	 * Constructs tree from arraylist of people
+	 */
 	Tree(ArrayList<ArrayList<Person>> people, Person initial){
 		all = people;
 		initialPerson = initial;
 	}
-
+	
+	/**
+	 * getPerson
+	 * 
+	 * @param generation
+	 * @param number
+	 * @return Person
+	 * Returns person from tree given location
+	 */
 	public Person getPerson(int generation, int number) {
 		return all.get(generation).get(number);
 	}
-
+	
+	/**
+	 * getPosition
+	 * 
+	 * @param person
+	 * @return int[]
+	 * Returns location of person in tree
+	 */
 	public int[] getPosition(Person person) {
 		for (int i = 0; i < all.size(); i++) {
 			for (int j = 0; j < all.get(i).size(); j++) {
@@ -44,6 +69,12 @@ public class Tree {
 		return ans;
 	}
 
+	/**
+	 * isAncestor
+	 * Returns if person is an ancestor
+	 * @param p
+	 * @return boolean
+	 */
 	public boolean isAncestor(Person p) {
 		if (p == initialPerson) {
 			return true;
@@ -56,6 +87,14 @@ public class Tree {
 		return false;
 	}
 	
+	/**
+	 * hasCarrierAncestor
+	 * 
+	 * @param p
+	 * @param dominant
+	 * @return boolean
+	 * Returns if person has a carrier ancestor
+	 */
 	public boolean hasCarrierAncestor(Person p, boolean dominant) {
 		if(dominant) {
 			if(!p.isAffected()) {
@@ -88,6 +127,10 @@ public class Tree {
 		}
 	}
 	
+	/**
+	 * reset
+	 * Resets the tree
+	 */
 	public void reset() {
 		for(int i = 0;i<all.size();i++) {
 			for(int j = 0;j<all.get(i).size();j++) {
@@ -98,7 +141,14 @@ public class Tree {
 			}
 		}
 	}
-
+	
+	/**
+	 * addParents
+	 * 
+	 * @param person
+	 * @return boolean
+	 * Adds parents to person
+	 */
 	public boolean addParents(Person person) {
 		if (person.getFather() == null && person.getMother() == null) {
 			Person father = new Person(false, false);
@@ -127,7 +177,14 @@ public class Tree {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * addChild
+	 * 
+	 * @param person
+	 * @return boolean
+	 * Adds child to person
+	 */
 	public boolean addChild(Person person) {
 		if (person.getSpouse() != null) {
 			Person child = new Person(false, false);
@@ -161,7 +218,14 @@ public class Tree {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * addSpouse
+	 * 
+	 * @param person
+	 * @return boolean
+	 * adds spouse to person
+	 */
 	public boolean addSpouse(Person person) {
 		if (person.getSpouse() == null) {
 			Person spouse = new Person(!person.getSex(), false);
@@ -177,7 +241,8 @@ public class Tree {
 	 * yLinked
 	 * 
 	 * @param p
-	 * @return boolean Calculates whether or not an individual has the y-linked
+	 * @return boolean 
+	 * Calculates whether or not an individual has the y-linked
 	 *         condition
 	 */
 	boolean yLinked(Person p) {
@@ -232,7 +297,8 @@ public class Tree {
 	 * xLinkDominant
 	 * 
 	 * @param p
-	 * @return Fraction Calculates chance of being affected by the x-linked dominant
+	 * @return Fraction 
+	 * Calculates chance of being affected by the x-linked dominant
 	 *         condition
 	 */
 	boolean xLinkDominant(Person p) {
@@ -323,7 +389,8 @@ public class Tree {
 	 * xLinkRecessive
 	 * 
 	 * @param p
-	 * @return Fraction Calculates chance of being affected by the x-linked
+	 * @return Fraction 
+	 * Calculates chance of being affected by the x-linked
 	 *         recessive condition
 	 */
 	boolean xLinkRecessive(Person p) {
@@ -415,7 +482,8 @@ public class Tree {
 	 * autosomalDominant
 	 * 
 	 * @param p
-	 * @return Fraction Calculates chance of being affected by the autosomal
+	 * @return Fraction 
+	 * Calculates chance of being affected by the autosomal
 	 *         dominant condition
 	 */
 	boolean autosomalDominant(Person p) { // done
@@ -493,7 +561,8 @@ public class Tree {
 	 * autosomalRecessive
 	 * 
 	 * @param p
-	 * @return Fraction Calculates chance of being affected by the autosomal
+	 * @return Fraction
+	 * Calculates chance of being affected by the autosomal
 	 *         recessive condition
 	 */
 	boolean autosomalRecessive(Person p) { // done
@@ -567,7 +636,14 @@ public class Tree {
 		}
 
 	}
-
+	
+	/**
+	 * yLinkUp
+	 * 
+	 * @param p
+	 * @return boolean
+	 * Calculates y linked chance going upwards
+	 */
 	boolean yLinkUp(Person p) {
 		if (p.getFather() == null && p.getMother() == null) {
 			if (p.getSex()) {
@@ -595,7 +671,14 @@ public class Tree {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * xLinkDominantUp
+	 * 
+	 * @param p
+	 * @return boolean
+	 * Calculates x linked dominant chance going upwards
+	 */
 	boolean xLinkDominantUp(Person p) {
 		if (p.getSex() && p.isAffected() && p.getSpouse() != null) { // person is female and affected
 			if (p.getSpouse().isAffected()) { // partner is affected
@@ -644,7 +727,14 @@ public class Tree {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * xLinkRecessiveUp
+	 * 
+	 * @param p
+	 * @return boolean
+	 * Calculates x linked recessive chance going upwards
+	 */
 	boolean xLinkRecessiveUp(Person p) {
 		if (p.getSex() && !p.isAffected() && p.getSpouse() != null) { // person is female and unaffected
 			if (p.getSpouse().isAffected()) { // partner is affected
@@ -686,7 +776,14 @@ public class Tree {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * autosomalDominantUp
+	 * 
+	 * @param p
+	 * @return boolean
+	 * Calculates autosomal dominant chance going upwards
+	 */
 	boolean autosomalDominantUp(Person p) {
 		if (p.isAffected() && p.getSpouse() != null) { // person is affected
 			if (p.getSpouse().isAffected()) { // partner is affected
@@ -737,6 +834,13 @@ public class Tree {
 		return true;
 	}
 
+	/**
+	 * autosomalRecessiveUp
+	 * 
+	 * @param p
+	 * @return boolean
+	 * Calculates autosomal recessive chance going upwards
+	 */
 	boolean autosomalRecessiveUp(Person p) {
 		if (!p.isAffected() && p.getSpouse() != null) { // person is unaffected
 			if (!p.getSpouse().isAffected()) { // partner is unaffected
