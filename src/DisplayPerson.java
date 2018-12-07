@@ -1,15 +1,16 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class DisplayNode extends DisplayPeople {
+public class DisplayPerson extends JPanel {
 	private final Person person;
-	private DisplayParents parents;
-	private DisplayParents partnership;
+	private Tree tree;
 
-	public DisplayNode(Person person, Tree tree, Refreshable refreshable) {
+	public DisplayPerson(Person person, Tree tree, Refreshable refreshable) {
 		this.person = person;
+		this.tree = tree;
 		setPreferredSize(new Dimension(50, 50));
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -20,29 +21,20 @@ public class DisplayNode extends DisplayPeople {
 		});
 	}
 
-	public DisplayParents getParents() {
-		return parents;
-	}
-
 	public Person getPerson() {
 		return person;
 	}
 
-	public void setParents(DisplayParents parents) {
-		this.parents = parents;
-	}
-
-	public void setPartnership(DisplayParents partnership) {
-		this.partnership = partnership;
-	}
-
-	public DisplayParents getPartnership() {
-		return partnership;
+	public Person getSpouse() {
+		return person.getSpouse();
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		if (tree.initialPerson == person) {
+			g.setColor(Color.RED);
+		}
 		if (person.getSex() == Person.FEMALE) {
 			if (person.isAffected()) {
 				g.fillOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
@@ -56,9 +48,5 @@ public class DisplayNode extends DisplayPeople {
 				g.drawRect(0, 0, g.getClipBounds().width, g.getClipBounds().height);
 			}
 		}
-	}
-
-	@Override
-	public void draw() {
 	}
 }

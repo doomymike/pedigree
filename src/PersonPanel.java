@@ -1,7 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 public class PersonPanel extends JPopupMenu {
 	public PersonPanel(Person person, Tree tree, Refreshable refreshable) {
+		// TODO: don't show these components if they won't do anything
 		JButton parentsButton = new JButton("Add Parents");
 		parentsButton.addActionListener(e -> {
 			tree.addParents(person);
@@ -23,5 +26,21 @@ public class PersonPanel extends JPopupMenu {
 			this.setVisible(false);
 		});
 		add(childButton);
+		addPopupMenuListener(new PopupMenuListener() {
+			@Override
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+
+			}
+
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				refreshable.repaint();
+			}
+
+			@Override
+			public void popupMenuCanceled(PopupMenuEvent e) {
+
+			}
+		});
 	}
 }
