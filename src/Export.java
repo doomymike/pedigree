@@ -23,10 +23,13 @@ public class Export {
 	public static void putOut(Tree t,String name)throws IOException {
 		PrintWriter writer = new PrintWriter(name, "UTF-8");
 		
+		//writes initial person to file
 		writer.println(t.getPosition(t.initialPerson)[0]);
 		writer.println(t.getPosition(t.initialPerson)[1]);
 		
 		writer.println();
+		
+		//loops through entire tree, adding every person's information
 		for (int i =0;i<t.all.size();i++){
 			
 			for (int j = 0;j< t.all.get(i).size();j++){
@@ -114,7 +117,7 @@ public class Export {
 		  br.readLine();
 		  br.readLine();
 		  
-		  j = -1;
+		  j = -1; 
 		  int i=0;
 		  while ((st = br.readLine()) != null){
 			    if(st.equals("")){
@@ -130,6 +133,7 @@ public class Export {
 			    		people.get(j).get(i).setMother(people.get(j+1).get(Integer.parseInt(mom)));
 			    		people.get(j+1).get(Integer.parseInt(mom)).children.add(people.get(j).get(i));
 			    		people.get(j+1).get(Integer.parseInt(mom)).addSpouse(people.get(j+1).get(Integer.parseInt(dad)));
+			    		
 			    	}
 			    	i++;
 			    }
@@ -173,6 +177,7 @@ public class Export {
 	}
 	
 }
+
 
 
 
