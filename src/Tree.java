@@ -18,13 +18,7 @@ public class Tree {
 		all.add(initialPersons);
 
 		addParents(initialPerson);
-		addParents(initialPerson.getMother());
-		addParents(initialPerson.getFather());
-		addChild(initialPerson.getFather().getFather());
-		addChild(initialPerson.getFather());
-		addChild(initialPerson.getMother().getFather());
-		getPerson(1,0).setSex(true);
-		getPerson(0,1).setSex(true);
+		
 	}
 	
 	
