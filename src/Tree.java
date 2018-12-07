@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * Tree.java
+ * @author Max Tang, Michael Oren
+ * Dec 7 2018
+ * Stores family tree in array, including calculation methods
+ */
 public class Tree {
 	ArrayList<ArrayList<Person>> all = new ArrayList<ArrayList<Person>>();
 	Person initialPerson;
@@ -788,6 +794,12 @@ public class Tree {
 	}
 }
 
+/**
+ * Person.java
+ * @author Max Tang, Michael Oren
+ * Dec 7 2018
+ * Person object, contains sex, infection status and family connections
+ */
 class Person {
 	ArrayList<Person> children = new ArrayList<Person>();
 	public static final boolean FEMALE = true;
