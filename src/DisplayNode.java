@@ -8,7 +8,12 @@ public class DisplayNode extends DisplayPeople {
 
 	public DisplayNode(Person person, Tree tree, Refreshable refreshable) {
 		this.person = person;
-		setBackground(Color.BLACK);
+		// TODO: turn this into square/rectangle
+		if (person.getSex() == Person.MALE) {
+			setBackground(Color.BLACK);
+		} else {
+			setBackground(Color.ORANGE);
+		}
 		setPreferredSize(new Dimension(100, 30));
 	}
 
@@ -30,5 +35,9 @@ public class DisplayNode extends DisplayPeople {
 
 	public DisplayParents getPartnership() {
 		return partnership;
+	}
+
+	@Override
+	public void draw() {
 	}
 }

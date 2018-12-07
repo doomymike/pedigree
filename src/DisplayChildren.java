@@ -10,7 +10,7 @@ public class DisplayChildren extends DisplayPeople {
 		this.children = new ArrayList<>();
 	}
 
-	public void add(DisplayPeople person) {
+	public void addChild(DisplayPeople person) {
 		// If we already have the person we're looking for, do nothing
 		for (DisplayPeople people : children) {
 			if (person.equals(people)) {
@@ -23,5 +23,13 @@ public class DisplayChildren extends DisplayPeople {
 
 	public boolean isEmpty() {
 		return children.isEmpty();
+	}
+
+	@Override
+	public void draw() {
+		for (DisplayPeople child : children) {
+			child.draw();
+			add(child);
+		}
 	}
 }

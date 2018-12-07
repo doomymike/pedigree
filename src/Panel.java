@@ -1,4 +1,4 @@
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ public class Panel extends JPanel implements Refreshable {
 	public Panel(Tree tree) {
 		// TODO: remove next line and corresponding import
 		setBackground(Color.GRAY);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.tree = tree;
 		refresh();
 	}
@@ -26,6 +27,7 @@ public class Panel extends JPanel implements Refreshable {
 			people.add(displayGeneration);
 		}
 		link(people);
+		draw();
 	}
 
 	private void link(ArrayList<ArrayList<DisplayNode>> people) {
@@ -63,7 +65,7 @@ public class Panel extends JPanel implements Refreshable {
 
 					if (person.getPerson().getSpouse() == null) {
 						// Add this person to the children node
-						person.getParents().getChildren().add(person);
+						person.getParents().getChildren().addChild(person);
 					}
 				}
 
@@ -85,7 +87,7 @@ public class Panel extends JPanel implements Refreshable {
 					}
 					if (!nodes.get(i).contains(person.getPartnership())) {
 						if (person.getParents() != null) {
-							person.getParents().getChildren().add(person.getPartnership());
+							person.getParents().getChildren().addChild(person.getPartnership());
 						} else {
 							nodes.get(i).add(person.getPartnership());
 						}
@@ -94,6 +96,28 @@ public class Panel extends JPanel implements Refreshable {
 					nodes.get(i).add(person);
 				}
 			}
+		}
+	}
+
+	private void draw() {
+		for (int i = 0; i < nodes.size(); i++) {
+			ArrayList<DisplayPeople> generation = nodes.get(i);
+			DisplayGeneration displayGeneration = new DisplayGeneration(i);
+			for (int j = 0; j < generation.size(); j++) {
+				DisplayPeople node = generation.get(j);
+				node.draw();
+				int x = 0;
+				if (node instanceof DisplayParents && !((DisplayParents) node).getChildren().isEmpty()) {
+					x = ((DisplayParents) node).getChildren().getX();
+				}
+				if (node instanceof DisplayChildren && j > 0) {
+					x = generation.get(j - 1).getX() + generation.get(j - 1).getWidth() + 20;
+				}
+				Dimension size = node.getPreferredSize();
+				// node.setBounds(x, 0, size.width, size.height);
+				displayGeneration.add(node);
+			}
+			add(displayGeneration);
 		}
 	}
 }

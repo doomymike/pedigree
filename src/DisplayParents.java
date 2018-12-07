@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Class containing a couple, regardless of whether they may or may not have children
  */
@@ -36,5 +38,14 @@ public class DisplayParents extends DisplayPeople {
 
 	public DisplayNode getFather() {
 		return father;
+	}
+
+	@Override
+	public void draw() {
+		mother.draw();
+		father.draw();
+		add(mother);
+		add(new JLabel("-"));
+		add(father);
 	}
 }
