@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +10,7 @@ public class DisplayChildren extends DisplayPeople {
 
 	public DisplayChildren() {
 		this.children = new ArrayList<>();
+		setBorder(BorderFactory.createLineBorder(Color.PINK));
 	}
 
 	public void addChild(DisplayPeople person) {

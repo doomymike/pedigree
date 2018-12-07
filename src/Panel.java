@@ -8,16 +8,15 @@ public class Panel extends JPanel implements Refreshable {
 	private ArrayList<ArrayList<DisplayPeople>> nodes = new ArrayList<>();
 
 	public Panel(Tree tree) {
-		// TODO: remove next line and corresponding import
-		setBackground(Color.GRAY);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.tree = tree;
 		refresh();
 	}
 
 	public void refresh() {
-		ArrayList<ArrayList<DisplayNode>> people = new ArrayList<>();
 		nodes.clear();
+		removeAll();
+		ArrayList<ArrayList<DisplayNode>> people = new ArrayList<>();
 		for (List<Person> generation : tree.all) {
 			ArrayList<DisplayNode> displayGeneration = new ArrayList<>();
 			for (Person person : generation) {
