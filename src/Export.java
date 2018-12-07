@@ -129,7 +129,7 @@ public class Export {
 			    		people.get(j+1).get(Integer.parseInt(dad)).children.add(people.get(j).get(i));
 			    		people.get(j).get(i).setMother(people.get(j+1).get(Integer.parseInt(mom)));
 			    		people.get(j+1).get(Integer.parseInt(mom)).children.add(people.get(j).get(i));
-			    		people.get(j+1).get(Integer.parseInt(mom)).setSpouse(people.get(j+1).get(Integer.parseInt(dad)));
+			    		people.get(j+1).get(Integer.parseInt(mom)).addSpouse(people.get(j+1).get(Integer.parseInt(dad)));
 			    	}
 			    	i++;
 			    }
