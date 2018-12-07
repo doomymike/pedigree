@@ -31,7 +31,8 @@ public class Panel extends JPanel implements Refreshable {
 	}
 
 	private void draw(ArrayList<ArrayList<DisplayPerson>> people) {
-		for (ArrayList<DisplayPerson> generation : people) {
+		for (int generationNumber = people.size() - 1; generationNumber >= 0; generationNumber--) {
+			ArrayList<DisplayPerson> generation = people.get(generationNumber);
 			DisplayGeneration displayGeneration = new DisplayGeneration();
 			for (int number = 0; number < generation.size(); number++) {
 				DisplayPerson person = generation.get(number);
