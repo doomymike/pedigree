@@ -1,7 +1,11 @@
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class PersonPanel extends JPanel {
+public class PersonPanel extends JPopupMenu {
     public PersonPanel(Person person, Tree tree, Refreshable refreshable) {
 
         
@@ -20,16 +24,17 @@ public class PersonPanel extends JPanel {
         addParentButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
+                addParentButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentHover.png"))));
+                addParentButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentHover.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
             }
             public void mouseClicked(MouseEvent e) {
                 tree.addParents(person);
                 refreshable.refresh();
+                setVisible(false);
             }
         });
 
@@ -44,16 +49,17 @@ public class PersonPanel extends JPanel {
         addPartnerButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
+                addPartnerButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerHover.png"))));
+                addPartnerButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerHover.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
             }
             public void mouseClicked(MouseEvent e) {
-                tree.addParents(person);
+                tree.addSpouse(person);
                 refreshable.refresh();
+                setVisible(false);
             }
         });
 
@@ -69,20 +75,37 @@ public class PersonPanel extends JPanel {
         addChildButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));
+                addChildButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildHover.png"))));
+                addChildButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildHover.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
             }
             public void mouseClicked(MouseEvent e) {
-                tree.addParents(person);
+                tree.addChild(person);
                 refreshable.refresh();
+                setVisible(false);
             }
         });
 
         add(addChildButton);
-        
+
+        addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                refreshable.repaint();
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
+        });
     }
 }
