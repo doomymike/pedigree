@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-//                                                                  CREATE EXAMPLES TO SHOW
+/**
+ * Export.java
+ * @author Michael Oren
+ * Dec 7 2018
+ * Exports information to a data file, as well as takes information from a data file
+ */
 public class Export {
 	
 	/**
