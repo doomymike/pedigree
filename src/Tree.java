@@ -36,7 +36,27 @@ public class Tree {
 		all = people;
 		initialPerson = initial;
 	}
-	
+	public boolean calculate() {
+		for(int i = 1;i<testTree.all.size();i++) {
+			for(int j = 0;j<testTree.all.get(i).size();j++) {
+				if(!testTree.autosomalRecessiveUp(testTree.all.get(i).get(j))){
+					System.out.println("error at (" + i + "," + j + ")");
+					testTree.reset();
+					return false;
+				}
+			}
+		}
+		for(int i = testTree.all.size()-1;i>=0;i--) {
+			for(int j = 0;j<testTree.all.get(i).size();j++) {
+				if(!testTree.autosomalRecessive(testTree.all.get(i).get(j))) {
+					System.out.println("error at (" + i + "," + j + ")");
+					testTree.reset();
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	/**
 	 * getPerson
 	 * 
