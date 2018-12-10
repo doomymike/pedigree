@@ -32,6 +32,14 @@ public class DisplayPerson extends JPanel {
 	}
 
 	/**
+	 * Getter for person data
+	 * @return Person object
+	 */
+	public Person getPerson() {
+		return person;
+	}
+
+	/**
 	 * Paints the symbol
 	 * @param g Swing graphics object
 	 */

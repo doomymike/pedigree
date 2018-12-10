@@ -23,8 +23,10 @@ public class Panel extends JPanel implements Refreshable {
 	 */
 	public void refresh() {
 		removeAll();
+		DisplayGeneration lastGeneration = null;
 		for (int generationNumber = tree.all.size() - 1; generationNumber >= 0; generationNumber--) {
-			add(new DisplayGeneration(tree, generationNumber, this));
+			lastGeneration = new DisplayGeneration(tree, generationNumber, this, lastGeneration);
+			add(lastGeneration);
 		}
 		revalidate();
 		repaint();
