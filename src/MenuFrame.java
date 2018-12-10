@@ -193,38 +193,11 @@ public class MenuFrame extends JFrame implements Runnable {
                 buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("YLinkPress.png"))));
             }
             public void mouseClicked(MouseEvent e) {
-				try {
-					next = new Display(Export.takeIn("ylink.txt"));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+                next = new Display(new Tree());
 				dispose();
             }
         });
 
-        //Add samples button to panel
-        panel.add(buttonSix);
-        buttonSix.setLocation(500,450);
-        buttonSix.setSize(450,160);
-        buttonSix.setBorder(BorderFactory.createEmptyBorder());
-        buttonSix.setContentAreaFilled(false);
-
-        //Custom button mouseListener
-        buttonSix.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonSix.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesHover.png"))));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonSix.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesButton.png"))));
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonSix.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesPress.png"))));
-            }
-            public void mouseClicked(MouseEvent e) {
-				// TODO: place samples in samples
-            }
-        });
 
         add(panel);
         setVisible(true);
