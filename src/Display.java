@@ -9,9 +9,11 @@ public class Display extends JFrame {
 	/**
 	 * Constructor
 	 * @param tree Pedigree to be drawn
+	 * @param inheritance Type of inheritance of disease
+	 * @see Inheritance
 	 */
-	public Display(Tree tree) {
-		add(new JScrollPane(new Panel(tree)));
+	public Display(Tree tree, Inheritance inheritance) {
+		add(new JScrollPane(new Panel(tree, inheritance)));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();

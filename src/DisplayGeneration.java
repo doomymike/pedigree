@@ -13,10 +13,13 @@ public class DisplayGeneration extends JPanel {
 	/**
 	 * Constructor
 	 * @param tree Pedigree to be rendered
+	 * @param inheritance Type of inheritance of disease
 	 * @param number Generation number in pedigree object
 	 * @param refreshable Component to refresh when the tree is modified
+	 * @param previous One generation older
+	 * @see Inheritance
 	 */
-	public DisplayGeneration(Tree tree, int number, Refreshable refreshable, DisplayGeneration previous) {
+	public DisplayGeneration(Tree tree, Inheritance inheritance, int number, Refreshable refreshable, DisplayGeneration previous) {
 		this.previous = previous;
 		ArrayList<Person> data = tree.all.get(number);
 		for (int i = 0; i < data.size(); i++) {
@@ -32,7 +35,7 @@ public class DisplayGeneration extends JPanel {
 					}
 				}
 			}
-			DisplayPerson displayPerson = new DisplayPerson(person, tree, refreshable);
+			DisplayPerson displayPerson = new DisplayPerson(person, tree, inheritance, refreshable);
 			add(displayPerson);
 			people.add(displayPerson);
 		}
