@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 public class DisplayPerson extends JPanel {
 	private final Person person;
 	private Tree tree;
+	private final Inheritance inheritance;
 
 	/**
 	 * Constructor
@@ -18,9 +19,10 @@ public class DisplayPerson extends JPanel {
 	 * @param tree Pedigree containing the person
 	 * @param refreshable Component to refresh when the tree is modified
 	 */
-	public DisplayPerson(Person person, Tree tree, Refreshable refreshable) {
+	public DisplayPerson(Person person, Tree tree, Inheritance inheritance, Refreshable refreshable) {
 		this.person = person;
 		this.tree = tree;
+		this.inheritance = inheritance;
 		setPreferredSize(new Dimension(50, 50));
 		addMouseListener(new MouseAdapter() {
 			@Override

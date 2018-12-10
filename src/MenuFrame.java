@@ -78,7 +78,7 @@ public class MenuFrame extends JFrame implements Runnable {
             }
             public void mouseClicked(MouseEvent e) {
                 try {
-                    next = new Display(Export.takeIn("autodom.txt"));
+                    next = new Display(Export.takeIn("autodom.txt"), Inheritance.AUTOSOMAL_DOMINANT);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -107,7 +107,7 @@ public class MenuFrame extends JFrame implements Runnable {
             }
             public void mouseClicked(MouseEvent e) {
                 try {
-                    next = new Display(Export.takeIn("autorec.txt"));
+                    next = new Display(Export.takeIn("autorec.txt"), Inheritance.AUTOSOMAL_RECESSIVE);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -136,7 +136,7 @@ public class MenuFrame extends JFrame implements Runnable {
             }
             public void mouseClicked(MouseEvent e) {
                 try {
-                    next = new Display(Export.takeIn("xdom.txt"));
+                    next = new Display(Export.takeIn("xdom.txt"), Inheritance.X_LINKED_DOMINANT);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -165,7 +165,7 @@ public class MenuFrame extends JFrame implements Runnable {
             }
             public void mouseClicked(MouseEvent e) {
 				try {
-					next = new Display(Export.takeIn("xrec.txt"));
+					next = new Display(Export.takeIn("xrec.txt"), Inheritance.X_LINKED_RECESSIVE);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -194,7 +194,7 @@ public class MenuFrame extends JFrame implements Runnable {
             }
             public void mouseClicked(MouseEvent e) {
 				try {
-					next = new Display(Export.takeIn("ylink.txt"));
+					next = new Display(Export.takeIn("ylink.txt"), Inheritance.Y_LINKED);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
