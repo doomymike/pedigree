@@ -33,12 +33,12 @@ public class Panel extends JPanel implements Refreshable {
 			add(lastGeneration);
 		}
 
-		/* calculate();
+		 calculate();
 
 		Person person = tree.initialPerson;
 		add(new JLabel("Homozygous affected chance: " + person.getHomoAffected().numerator + " / " + person.getHomoAffected().denominator));
 		add(new JLabel("Heterozygous chance: " + person.getHetero().numerator + " / " + person.getHetero().denominator));
-		add(new JLabel("Homozygous unaffected chance: " + person.getHomoUnaffected().numerator + " / " + person.getHomoUnaffected().denominator)); */
+		add(new JLabel("Homozygous unaffected chance: " + person.getHomoUnaffected().numerator + " / " + person.getHomoUnaffected().denominator));
 		revalidate();
 		repaint();
 	}
@@ -87,7 +87,7 @@ public class Panel extends JPanel implements Refreshable {
 		}
 		for(int i = tree.all.size()-1;i>=0;i--) {
 			for(int j = 0;j<tree.all.get(i).size();j++) {
-				if(!tree.autosomalRecessive(tree.all.get(i).get(j))) {
+				if(!calculatePerson(tree.all.get(i).get(j))) {
 					System.out.println("error at (" + i + "," + j + ")");
 					tree.reset();
 					return false;
