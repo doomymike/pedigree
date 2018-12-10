@@ -24,10 +24,12 @@ public class DisplayGeneration extends JPanel {
 			if (i > 0 && person.getSpouse() == data.get(i - 1)) {
 				JLabel connector = new JLabel("-");
 				add(connector);
-				if (person.getSex() == Person.FEMALE) {
-					lines.add(new ParentLine(connector, person));
-				} else {
-					lines.add(new ParentLine(connector, person.getSpouse()));
+				if (!person.children.isEmpty()) {
+					if (person.getSex() == Person.FEMALE) {
+						lines.add(new ParentLine(connector, person));
+					} else {
+						lines.add(new ParentLine(connector, person.getSpouse()));
+					}
 				}
 			}
 			DisplayPerson displayPerson = new DisplayPerson(person, tree, refreshable);
@@ -43,10 +45,8 @@ public class DisplayGeneration extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		for (Component component : getComponents()) {
-			if (component instanceof JLabel) {
-				g.drawLine(component.getX() + 2, component.getY() + 10, component.getX() + 2, g.getClipBounds().height);
-			}
+		for (ParentLine line : lines) {
+			g.drawLine(line.getPosition(), line.getY(), line.getPosition(), g.getClipBounds().height);
 		}
 
 		ArrayList<DisplayChildren> groups = new ArrayList<>();
@@ -74,7 +74,6 @@ public class DisplayGeneration extends JPanel {
 			int vertical = 0;
 			for (ParentLine line : previous.lines) {
 				if (line.getMother() == children.getMother()) {
-					System.out.println("vertical is set");
 					vertical = line.getPosition();
 					break;
 				}

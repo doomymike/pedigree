@@ -17,89 +17,95 @@ public class PersonPanel extends JPopupMenu {
      * @param refreshable Component to refresh when the tree is modified
      */
     public PersonPanel(Person person, Tree tree, Refreshable refreshable) {
-
-        // TODO: isancestor
-        JButton addParentButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
-        JButton addPartnerButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
-        JButton addChildButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));
-  
-
-        
         //Add AddParent button to panel
+        if (person.getMother() == null && person.getFather() == null) {
+            JButton addParentButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
+            addParentButton.setBorderPainted(false);
+            addParentButton.setContentAreaFilled(false);
 
-        addParentButton.setBorderPainted(false);
-        addParentButton.setContentAreaFilled(false);
+            //Custom button mouseListener
+            addParentButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    addParentButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
+                }
 
-        //Custom button mouseListener
-        addParentButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addParentButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                addParentButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentHover.png"))));
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt){
-            }
-            public void mouseClicked(MouseEvent e) {
-                tree.addParents(person);
-                refreshable.refresh();
-                setVisible(false);
-            }
-        });
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    addParentButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentHover.png"))));
+                }
 
-        add(addParentButton);
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                }
+
+                public void mouseClicked(MouseEvent e) {
+                    tree.addParents(person);
+                    refreshable.refresh();
+                    setVisible(false);
+                }
+            });
+
+            add(addParentButton);
+        }
         
         //Add AddPartner button to panel
+        if (person.getSpouse() == null) {
+            JButton addPartnerButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
+            addPartnerButton.setBorderPainted(false);
+            addPartnerButton.setContentAreaFilled(false);
 
-        addPartnerButton.setBorderPainted(false);
-        addPartnerButton.setContentAreaFilled(false);
+            //Custom button mouseListener
+            addPartnerButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    addPartnerButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
+                }
 
-        //Custom button mouseListener
-        addPartnerButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addPartnerButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                addPartnerButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerHover.png"))));
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt){
-            }
-            public void mouseClicked(MouseEvent e) {
-                tree.addSpouse(person);
-                refreshable.refresh();
-                setVisible(false);
-            }
-        });
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    addPartnerButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerHover.png"))));
+                }
 
-        add(addPartnerButton);
-        
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                }
+
+                public void mouseClicked(MouseEvent e) {
+                    tree.addSpouse(person);
+                    refreshable.refresh();
+                    setVisible(false);
+                }
+            });
+
+            add(addPartnerButton);
+        }
         
         //Add AddChild button to panel
+        if (person.getSpouse() != null) {
+            JButton addChildButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));
+            addChildButton.setBorderPainted(false);
+            addChildButton.setContentAreaFilled(false);
 
-        addChildButton.setBorderPainted(false);
-        addChildButton.setContentAreaFilled(false);
+            //Custom button mouseListener
+            addChildButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    addChildButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));
+                }
 
-        //Custom button mouseListener
-        addChildButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addChildButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                addChildButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildHover.png"))));
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt){
-            }
-            public void mouseClicked(MouseEvent e) {
-                tree.addChild(person);
-                refreshable.refresh();
-                setVisible(false);
-            }
-        });
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    addChildButton.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildHover.png"))));
+                }
 
-        add(addChildButton);
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                }
+
+                public void mouseClicked(MouseEvent e) {
+                    tree.addChild(person);
+                    refreshable.refresh();
+                    setVisible(false);
+                }
+            });
+
+            add(addChildButton);
+        }
 
         addPopupMenuListener(new PopupMenuListener() {
             @Override

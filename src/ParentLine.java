@@ -27,6 +27,14 @@ public class ParentLine {
 	}
 
 	/**
+	 * Getter for vertical position of dash
+	 * @return Horizontal pixel position
+	 */
+	public int getY() {
+		return connector.getY() + 10;
+	}
+
+	/**
 	 * Getter for mother
 	 * @return Mother
 	 */
