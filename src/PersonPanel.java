@@ -5,10 +5,20 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Action panel that pops up when you click on a person
+ * @author Nicholas Carr, Brian Zhang
+ */
 public class PersonPanel extends JPopupMenu {
+    /**
+     * Constructor
+     * @param person Person to perform actions on
+     * @param tree Pedigree containing the person
+     * @param refreshable Component to refresh when the tree is modified
+     */
     public PersonPanel(Person person, Tree tree, Refreshable refreshable) {
 
-        
+        // TODO: isancestor
         JButton addParentButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
         JButton addPartnerButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddPartnerButton.png"))));
         JButton addChildButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddChildButton.png"))));

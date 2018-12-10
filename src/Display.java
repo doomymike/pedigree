@@ -1,18 +1,20 @@
 import javax.swing.*;
 
-public class Display extends JFrame implements Refreshable {
-	private Panel panel;
+/**
+ * Main frame for the app
+ * @author Nicholas Carr
+ */
+public class Display extends JFrame {
 
+	/**
+	 * Constructor
+	 * @param tree Pedigree to be drawn
+	 */
 	public Display(Tree tree) {
-		panel = new Panel(tree, this);
-		add(new JScrollPane(panel));
+		add(new JScrollPane(new Panel(tree)));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		pack();
 		setVisible(true);
-	}
-
-	public void refresh() {
-		panel.refresh();
 	}
 }

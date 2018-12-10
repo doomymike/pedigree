@@ -4,10 +4,20 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Symbol representing a person
+ * @author Nicholas Carr
+ */
 public class DisplayPerson extends JPanel {
 	private final Person person;
 	private Tree tree;
 
+	/**
+	 * Constructor
+	 * @param person Person to be drawn
+	 * @param tree Pedigree containing the person
+	 * @param refreshable Component to refresh when the tree is modified
+	 */
 	public DisplayPerson(Person person, Tree tree, Refreshable refreshable) {
 		this.person = person;
 		this.tree = tree;
@@ -21,14 +31,10 @@ public class DisplayPerson extends JPanel {
 		});
 	}
 
-	public Person getPerson() {
-		return person;
-	}
-
-	public Person getSpouse() {
-		return person.getSpouse();
-	}
-
+	/**
+	 * Paints the symbol
+	 * @param g Swing graphics object
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
