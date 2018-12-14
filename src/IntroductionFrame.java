@@ -33,7 +33,7 @@ public class IntroductionFrame extends JFrame implements KeyListener{
         //Base Dimensions
         setSize(1000,650);
         setLocationRelativeTo(null);
-        setTitle("Vote Whigs Today!");
+        setTitle("Pedigree Generator v0.0");
 
         //Decorations
         setResizable(true);

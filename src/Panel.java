@@ -1,3 +1,8 @@
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.*;
 
 /**
@@ -18,6 +23,17 @@ public class Panel extends JPanel implements Refreshable {
 		this.inheritance = inheritance;
 		this.tree = tree;
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		
+		//Custom Font
+		try {
+            GraphicsEnvironment ge =
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("renogare.otf")));
+        } catch (Exception e) {
+        }
+		
+        setUIFont(new javax.swing.plaf.FontUIResource("renogare", Font.PLAIN, 48));
+        
 		refresh();
 	}
 
@@ -36,9 +52,13 @@ public class Panel extends JPanel implements Refreshable {
 		 calculate();
 
 		Person person = tree.initialPerson;
-		add(new JLabel("Homozygous affected chance: " + person.getHomoAffected().numerator + " / " + person.getHomoAffected().denominator));
-		add(new JLabel("Heterozygous chance: " + person.getHetero().numerator + " / " + person.getHetero().denominator));
-		add(new JLabel("Homozygous unaffected chance: " + person.getHomoUnaffected().numerator + " / " + person.getHomoUnaffected().denominator));
+		JLabel chance1 =new JLabel("Homozygous affected chance: " + ((double)person.getHomoAffected().numerator)/((double)person.getHomoAffected().denominator)*100 + "%");
+		JLabel chance2 = new JLabel("Heterozygous chance: " + ((double)person.getHetero().numerator)/((double)person.getHetero().denominator)*100+"%");
+		JLabel chance3 = new JLabel("Homozygous unaffected chance: " + ((double)person.getHomoUnaffected().numerator)/((double)person.getHomoUnaffected().denominator)*100+"%");
+		add(chance1);
+		add(chance2);
+		add(chance3);
+		
 		revalidate();
 		repaint();
 	}
@@ -96,4 +116,15 @@ public class Panel extends JPanel implements Refreshable {
 		}
 		return true;
 	}
+	
+	//Load Custom Fonts
+    public static void setUIFont (javax.swing.plaf.FontUIResource f){
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get (key);
+            if (value instanceof javax.swing.plaf.FontUIResource)
+                UIManager.put (key, f);
+        }
+    }
 }

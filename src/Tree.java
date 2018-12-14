@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * Tree.java
- * @author Max Tang, Michael Oren
+ * @author Max Tang, Michael Oren, Brian Zhang
  * Dec 7 2018
  * Stores family tree in array, including calculation methods
  */
@@ -893,7 +893,7 @@ public class Tree {
 
 /**
  * Person.java
- * @author Max Tang, Michael Oren
+ * @author Max Tang, Michael Oren, Brian Zhang
  * Dec 7 2018
  * Person object, contains sex, infection status and family connections
  */

@@ -13,7 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-public class MenuFrame extends JFrame implements Runnable {
+public class SampleFrame extends JFrame implements Runnable {
     //MenuPanel reference initialization
     private MenuPanel panel;
     protected JFrame next;
@@ -23,11 +23,11 @@ public class MenuFrame extends JFrame implements Runnable {
     private int yPos = 0;
 
     //Base constructor
-    public MenuFrame(){
+    public SampleFrame(){
         //Base Dimensions
         setSize(1000,650);
         setLocationRelativeTo(null);
-        setTitle("Pedigree Generator v0.0");
+        setTitle("Vote Tories Today!");
 
         //Decorations
         setResizable(true);
@@ -50,12 +50,11 @@ public class MenuFrame extends JFrame implements Runnable {
         panel.setLayout(null);
 
         //Setup all buttons for pedigree options (AutoDom, AutoRec, XLinkDom, XLinkRec, YLink, Samples)
-        JButton buttonOne = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoDomButton.png"))));
-        JButton buttonTwo = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoRecButton.png"))));
-        JButton buttonThree = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkDomButton.png"))));
-        JButton buttonFour = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkRecButton.png"))));
-        JButton buttonFive = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("YLinkButton.png"))));
-        JButton buttonSix = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesButton.png"))));
+        JButton buttonOne = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoDomButton.png"))));
+        JButton buttonTwo = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoRecButton.png"))));
+        JButton buttonThree = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkDomButton.png"))));
+        JButton buttonFour = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkRecButton.png"))));
+        JButton buttonFive = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleYLinkButton.png"))));
 
         //Add AutoDom button to panel
         panel.add(buttonOne);
@@ -68,16 +67,20 @@ public class MenuFrame extends JFrame implements Runnable {
         buttonOne.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoDomHover.png"))));
+                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoDomButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoDomButton.png"))));
+                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoDomButton.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoDomPress.png"))));
+                buttonOne.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoDomButton.png"))));
             }
             public void mouseClicked(MouseEvent e) {
-            	next = new Display(new Tree(), Inheritance.AUTOSOMAL_DOMINANT);
+                try {
+                    next = new Display(Export.takeIn("autodom.txt"), Inheritance.AUTOSOMAL_DOMINANT);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 dispose();
             }
         });
@@ -93,16 +96,20 @@ public class MenuFrame extends JFrame implements Runnable {
         buttonTwo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonTwo.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoRecHover.png"))));
+                buttonTwo.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoRecButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonTwo.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoRecButton.png"))));
+                buttonTwo.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoRecButton.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonTwo.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AutoRecPress.png"))));
+                buttonTwo.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleAutoRecButton.png"))));
             }
             public void mouseClicked(MouseEvent e) {
-            	next = new Display(new Tree(), Inheritance.AUTOSOMAL_RECESSIVE);
+                try {
+                    next = new Display(Export.takeIn("autorec.txt"), Inheritance.AUTOSOMAL_RECESSIVE);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 dispose();
             }
         });
@@ -118,16 +125,20 @@ public class MenuFrame extends JFrame implements Runnable {
         buttonThree.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonThree.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkDomHover.png"))));
+                buttonThree.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkDomButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonThree.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkDomButton.png"))));
+                buttonThree.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkDomButton.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonThree.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkDomPress.png"))));
+                buttonThree.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkDomButton.png"))));
             }
             public void mouseClicked(MouseEvent e) {
-            	next = new Display(new Tree(), Inheritance.X_LINKED_DOMINANT);
+                try {
+                    next = new Display(Export.takeIn("xdom.txt"), Inheritance.X_LINKED_DOMINANT);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 dispose();
             }
         });
@@ -143,16 +154,20 @@ public class MenuFrame extends JFrame implements Runnable {
         buttonFour.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonFour.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkRecHover.png"))));
+                buttonFour.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkRecButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonFour.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkRecButton.png"))));
+                buttonFour.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkRecButton.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonFour.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("XLinkRecPress.png"))));
+                buttonFour.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleXLinkRecButton.png"))));
             }
             public void mouseClicked(MouseEvent e) {
-            	next = new Display(new Tree(), Inheritance.X_LINKED_RECESSIVE);
+				try {
+					next = new Display(Export.takeIn("xrec.txt"), Inheritance.X_LINKED_RECESSIVE);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				dispose();
             }
         });
@@ -168,44 +183,25 @@ public class MenuFrame extends JFrame implements Runnable {
         buttonFive.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("YLinkHover.png"))));
+                buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleYLinkButton.png"))));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("YLinkButton.png"))));
+                buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleYLinkButton.png"))));
             }
             public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("YLinkPress.png"))));
+                buttonFive.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SampleYLinkButton.png"))));
             }
             public void mouseClicked(MouseEvent e) {
-				next = new Display(new Tree(), Inheritance.Y_LINKED);
+				try {
+					next = new Display(Export.takeIn("ylink.txt"), Inheritance.Y_LINKED);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				dispose();
             }
         });
 
-        panel.add(buttonSix);
-        buttonSix.setLocation(500,450);
-        buttonSix.setSize(450,160);
-        buttonSix.setBorder(BorderFactory.createEmptyBorder());
-        buttonSix.setContentAreaFilled(false);
 
-      //Custom button mouseListener
-        buttonSix.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonSix.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesButton.png"))));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonSix.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesHover.png"))));
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt){
-                buttonSix.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SamplesPress.png"))));
-            }
-            public void mouseClicked(MouseEvent e) {
-				next = new SampleFrame();
-				dispose();
-            }
-        });
-        
         add(panel);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
