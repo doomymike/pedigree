@@ -96,7 +96,7 @@ public class Panel extends JPanel implements Refreshable {
 	}
 
 	public boolean calculate() {
-		for(int i = 1;i<tree.all.size();i++) {
+		for(int i = 0;i<tree.all.size();i++) {
 			for(int j = 0;j<tree.all.get(i).size();j++) {
 				if(!calculatePersonUp(tree.all.get(i).get(j))){
 					System.out.println("error at (" + i + "," + j + ")");

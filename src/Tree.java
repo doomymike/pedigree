@@ -194,10 +194,8 @@ public class Tree {
 			int[] position = getPosition(person);
 			if (position[0] == 0) {
 				all.add(0, new ArrayList<Person>());
-				position = getPosition(person);
-			}
-			// System.out.println(isAncestor(initialPerson.getFather()));
-			if (isAncestor(all.get(position[0] - 1).get(maxChildPos))
+				all.get(0).add(child);
+			}else if (isAncestor(all.get(position[0] - 1).get(maxChildPos))
 					&& getPosition(all.get(position[0] - 1).get(maxChildPos)
 							.getSpouse())[1] == getPosition(all.get(position[0] - 1).get(maxChildPos))[1] + 1) {
 				all.get(position[0] - 1).add(maxChildPos, child);
