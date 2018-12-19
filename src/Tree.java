@@ -980,6 +980,9 @@ class Person {
 
 	public void setSex(boolean sex) {
 		this.sex = sex;
+		if (spouse != null) {
+			spouse.sex = !sex;
+		}
 	}
 
 	public Fraction getHomoAffected() {
