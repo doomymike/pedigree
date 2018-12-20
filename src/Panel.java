@@ -45,20 +45,24 @@ public class Panel extends JPanel implements Refreshable {
 		removeAll();
 		DisplayGeneration lastGeneration = null;
 		for (int generationNumber = tree.all.size() - 1; generationNumber >= 0; generationNumber--) {
+			// TODO: export/import, colour person of interest
 			lastGeneration = new DisplayGeneration(tree, inheritance, generationNumber, this, lastGeneration);
 			add(lastGeneration);
 		}
 
 		 calculate();
-
 		Person person = tree.initialPerson;
-		JLabel chance1 =new JLabel("Homozygous affected chance: " + ((double)person.getHomoAffected().numerator)/((double)person.getHomoAffected().denominator)*100 + "%");
-		JLabel chance2 = new JLabel("Heterozygous chance: " + ((double)person.getHetero().numerator)/((double)person.getHetero().denominator)*100+"%");
-		JLabel chance3 = new JLabel("Homozygous unaffected chance: " + ((double)person.getHomoUnaffected().numerator)/((double)person.getHomoUnaffected().denominator)*100+"%");
-		add(chance1);
-		add(chance2);
-		add(chance3);
-		
+		if(person.getHomoUnaffected()!=null) {
+			JLabel chance1 = new JLabel("Homozygous affected chance: " + person.getHomoAffected().getNumber() * 100 + "%");
+			JLabel chance2 = new JLabel("Heterozygous chance: " + person.getHetero().getNumber() * 100 + "%");
+			JLabel chance3 = new JLabel("Homozygous unaffected chance: " + person.getHomoUnaffected().getNumber() * 100 + "%");
+			add(chance1);
+			add(chance2);
+			add(chance3);
+		}else{
+			JLabel chance1 = new JLabel("Invalid tree");
+			add(chance1);
+		}
 		revalidate();
 		repaint();
 	}
@@ -96,7 +100,8 @@ public class Panel extends JPanel implements Refreshable {
 	}
 
 	public boolean calculate() {
-		for(int i = 1;i<tree.all.size();i++) {
+		tree.reset();
+		for(int i = 0;i<tree.all.size();i++) {
 			for(int j = 0;j<tree.all.get(i).size();j++) {
 				if(!calculatePersonUp(tree.all.get(i).get(j))){
 					System.out.println("error at (" + i + "," + j + ")");

@@ -17,6 +17,63 @@ public class PersonPanel extends JPopupMenu {
      * @param refreshable Component to refresh when the tree is modified
      */
     public PersonPanel(Person person, Tree tree, Refreshable refreshable) {
+    	setBackground(Color.DARK_GRAY);
+    	if (person.isAffected()) {
+			JButton affected = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("MakeUnaffectedButton.png"))));
+			affected.setBorderPainted(false);
+			affected.setContentAreaFilled(false);
+			affected.addActionListener((e) -> {
+				person.setAffected(false);
+				refreshable.refresh();
+				setVisible(false);
+			});
+			add(affected);
+		} else {
+			JButton affected = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("MakeAffectedButton.png"))));
+			affected.setBorderPainted(false);
+			affected.setContentAreaFilled(false);
+			affected.addActionListener((e) -> {
+				person.setAffected(true);
+				refreshable.refresh();
+				setVisible(false);
+			});
+			add(affected);
+		}
+
+		if (person.getSex() == Person.MALE) {
+			JButton affected = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("MakeFemaleButton.png"))));
+			affected.setBorderPainted(false);
+			affected.setContentAreaFilled(false);
+			affected.addActionListener((e) -> {
+				person.setSex(Person.FEMALE);
+				refreshable.refresh();
+				setVisible(false);
+			});
+			add(affected);
+		} else {
+			JButton affected = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("MakeMaleButton.png"))));
+			affected.setBorderPainted(false);
+			affected.setContentAreaFilled(false);
+			affected.addActionListener((e) -> {
+				person.setSex(Person.MALE);
+				refreshable.refresh();
+				setVisible(false);
+			});
+			add(affected);
+		}
+
+		if (tree.initialPerson != person) {
+			JButton initial = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("SetInitialButton.png"))));
+			initial.setBorderPainted(false);
+			initial.setContentAreaFilled(false);
+			initial.addActionListener((e) -> {
+				tree.initialPerson = person;
+				refreshable.refresh();
+				setVisible(false);
+			});
+			add(initial);
+		}
+
         //Add AddParent button to panel
         if (person.getMother() == null && person.getFather() == null) {
             JButton addParentButton = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("AddParentButton.png"))));
