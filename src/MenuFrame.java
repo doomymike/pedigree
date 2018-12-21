@@ -12,11 +12,17 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class MenuFrame extends JFrame implements Runnable {
+public class MenuFrame extends JFrame implements Runnable, KeyListener {
     //MenuPanel reference initialization
     private MenuPanel panel;
     protected JFrame next;
+    protected IntroductionFrame nexto;
 
     //Mouse Position
     private int xPos = 0;
@@ -45,7 +51,9 @@ public class MenuFrame extends JFrame implements Runnable {
                 setLocation(evt.getXOnScreen()-xPos, evt.getYOnScreen()-yPos);
             }
         });
-
+        
+        addKeyListener(this);
+        
         panel = new MenuPanel();
         panel.setLayout(null);
 
@@ -211,6 +219,22 @@ public class MenuFrame extends JFrame implements Runnable {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    //BackButton
+    public void keyPressed(KeyEvent e)
+	   {
+	      // Ability to traverse backwards
+	      if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+	      {
+	    	  System.out.println("escape pressed");
+	    	  nexto = new IntroductionFrame();
+	          dispose();
+	      }
+	   }
+	
+	public void keyReleased(KeyEvent e){}
+
+	public void keyTyped(KeyEvent e){}
+	
     public void run(){
         //Placeholder method
     }
